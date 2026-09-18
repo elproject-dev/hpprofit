@@ -285,7 +285,7 @@ function TrialCountdown({ trialStartMs, onExpire }: { trialStartMs: number, onEx
   };
 
   return (
-    <div className="fixed bottom-6 right-7 z-50 animate-in fade-in slide-in-from-bottom-4 duration-500 delay-1000 fill-mode-both pointer-events-none">
+    <div className="fixed bottom-24 md:bottom-6 right-7 z-50 animate-in fade-in slide-in-from-bottom-4 duration-500 delay-1000 fill-mode-both pointer-events-none">
       <div className="bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 border border-zinc-800 dark:border-zinc-200 shadow-2xl px-5 py-3 rounded-sm flex flex-col gap-1 items-center justify-center">
         <span className="text-[10px] text-emerald-500 font-bold tracking-widest uppercase">
           Sisa Masa Trial

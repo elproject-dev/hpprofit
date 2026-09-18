@@ -281,15 +281,15 @@ export default function BantuanPage() {
             isOpen={openSection === "Hubungi Dukungan"}
             onToggle={() => toggleSection("Hubungi Dukungan")}
           >
-            <div className="flex flex-col items-center justify-center text-center p-8 bg-zinc-50/50 dark:bg-zinc-900/30 rounded-sm border border-dashed border-zinc-200 dark:border-zinc-800">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4">
-                <HelpCircle className="w-8 h-8 text-primary" />
+            <div className="flex flex-col items-center justify-center text-center p-5 sm:p-8 bg-zinc-50/50 dark:bg-zinc-900/30 rounded-sm border border-dashed border-zinc-200 dark:border-zinc-800">
+              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-primary/10 rounded-full flex items-center justify-center mb-3 sm:mb-4">
+                <HelpCircle className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
               </div>
-              <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100 mb-2">Butuh Bantuan Langsung?</h3>
-              <p className="text-sm text-zinc-500 mb-6 max-w-sm">
+              <h3 className="text-base sm:text-lg font-bold text-zinc-900 dark:text-zinc-100 mb-1.5 sm:mb-2">Butuh Bantuan Langsung?</h3>
+              <p className="text-xs sm:text-sm text-zinc-500 mb-4 sm:mb-6 max-w-sm px-2 sm:px-0">
                 Jangan ragu untuk menghubungi Kami jika Anda mengalami kendala teknis atau memiliki pertanyaan seputar cara penggunaan aplikasi ini.
               </p>
-              <Button onClick={() => window.open('https://wa.me/6283867180887', '_blank')} className="rounded-full px-8 shadow-md">
+              <Button onClick={() => window.open('https://wa.me/6283867180887', '_blank')} className="rounded-full px-6 sm:px-8 h-9 sm:h-10 text-xs sm:text-sm shadow-md">
                 Hubungi via WhatsApp
               </Button>
             </div>

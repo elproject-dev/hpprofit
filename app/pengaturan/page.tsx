@@ -292,30 +292,30 @@ export default function PengaturanPage() {
             isOpen={openSection === "Tentang Sistem"}
             onToggle={() => toggleSection("Tentang Sistem")}
           >
-            <div className="flex flex-col items-center justify-center p-6 bg-zinc-50/50 dark:bg-zinc-900/30 rounded-sm border border-zinc-200/60 dark:border-zinc-800/60 shadow-inner">
-              <img src="/icon.svg" alt="HPProfit Logo" className="w-16 h-16 mb-4 drop-shadow-md" />
-              <h4 className="text-xl font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">HPProfit Premium</h4>
-              <p className="text-xs text-zinc-500 mb-6 font-mono">Versi 1.0.0 (Build 2026)</p>
+            <div className="flex flex-col items-center justify-center p-4 sm:p-6 bg-zinc-50/50 dark:bg-zinc-900/30 rounded-sm border border-zinc-200/60 dark:border-zinc-800/60 shadow-inner">
+              <img src="/icon.svg" alt="HPProfit Logo" className="w-12 h-12 sm:w-16 sm:h-16 mb-2 sm:mb-4 drop-shadow-md" />
+              <h4 className="text-lg sm:text-xl font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">HPProfit Premium</h4>
+              <p className="text-[11px] sm:text-xs text-zinc-500 mb-4 sm:mb-6 font-mono">Versi 1.0.0 (Build 2026)</p>
 
-              <div className="w-full space-y-3 text-sm">
-                <div className="flex justify-between items-center pb-3 border-b border-zinc-200 dark:border-zinc-800/60">
+              <div className="w-full space-y-2 sm:space-y-3 text-xs sm:text-sm">
+                <div className="flex justify-between items-center pb-2 sm:pb-3 border-b border-zinc-200 dark:border-zinc-800/60">
                   <span className="text-zinc-500 dark:text-zinc-400">Status Lisensi</span>
-                  <span className="px-2.5 py-1 rounded-full bg-green-600 dark:bg-emerald-500/10 text-white dark:text-emerald-400 font-semibold text-xs border border-emerald-200 dark:border-emerald-500/20">
+                  <span className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-green-600 dark:bg-emerald-500/10 text-white dark:text-emerald-400 font-semibold text-[10px] sm:text-xs border border-emerald-200 dark:border-emerald-500/20">
                     Aktivasi Berhasil
                   </span>
                 </div>
-                <div className="flex justify-between items-center pb-3 border-b border-zinc-200 dark:border-zinc-800/60">
+                <div className="flex justify-between items-center pb-2 sm:pb-3 border-b border-zinc-200 dark:border-zinc-800/60">
                   <span className="text-zinc-500 dark:text-zinc-400">Server Keamanan</span>
                   <span className="font-semibold text-zinc-700 dark:text-zinc-300 flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                     Firebase Cloud
                   </span>
                 </div>
                 <div className="flex justify-between items-center pb-1">
                   <span className="text-zinc-500 dark:text-zinc-400">Pengembang</span>
                   <div className="flex flex-col items-end">
-                    <span className="font-semibold text-zinc-700 dark:text-zinc-300 uppercase">ElProject Development</span>
-                    <a href="https://www.elproject.studio" target="_blank" rel="noopener noreferrer" className="text-[11px] text-emerald-600 dark:text-emerald-500 hover:underline mt-0.5">
+                    <span className="font-semibold text-[11px] sm:text-xs text-zinc-700 dark:text-zinc-300 uppercase">ElProject Development</span>
+                    <a href="https://www.elproject.studio" target="_blank" rel="noopener noreferrer" className="text-[10px] sm:text-[11px] text-emerald-600 dark:text-emerald-500 hover:underline mt-0.5">
                       www.elproject.studio
                     </a>
                   </div>
