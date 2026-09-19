@@ -2,10 +2,14 @@
 
 import { useTheme } from "next-themes";
 import { useThemeCustomizer } from "@/components/theme-customizer";
-import { Check, Monitor, Moon, Sun, Palette, Type, ChevronDown, Info } from "lucide-react";
+import { Check, Monitor, Moon, Sun, Palette, Type, ChevronDown, Info, Clock, KeyRound, ShieldCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { AppLayout } from "@/components/app-layout";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import { validateFirebaseVoucher } from "@/lib/voucher";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 const colors = [
   { name: "Emerald (Default)", value: "emerald", class: "bg-emerald-500 border-emerald-600" },
@@ -75,6 +79,13 @@ export default function PengaturanPage() {
   const { colorScheme, setColorScheme, fontFamily, setFontFamily, fontSize, setFontSize, customH, setCustomH, customS, setCustomS, customL, setCustomL } = useThemeCustomizer();
   const [mounted, setMounted] = useState(false);
 
+  // State Status Lisensi
+  const [licenseStatus, setLicenseStatus] = useState<"authorized" | "trial" | "expired">("authorized");
+  const [trialTimeLeft, setTrialTimeLeft] = useState<string>("");
+  const [showVoucherInput, setShowVoucherInput] = useState(false);
+  const [voucherCode, setVoucherCode] = useState("");
+  const [isValidating, setIsValidating] = useState(false);
+
   // State untuk menyimpan menu mana yang sedang terbuka
   const [openSection, setOpenSection] = useState<string>("");
 
@@ -84,7 +95,77 @@ export default function PengaturanPage() {
 
   useEffect(() => {
     setMounted(true);
+
+    const checkLicense = () => {
+      const isAuth = localStorage.getItem("hpprofit_device_authorized");
+      if (isAuth === "true") {
+        setLicenseStatus("authorized");
+        return;
+      }
+
+      const trialStart = localStorage.getItem("hpprofit_trial_start");
+      if (!trialStart) {
+        setLicenseStatus("trial");
+        return;
+      }
+
+      const now = Date.now();
+      const msElapsed = now - parseInt(trialStart);
+      const TRIAL_DURATION = 1 * 24 * 60 * 60 * 1000; // 1 hari trial
+      const msLeft = Math.max(0, TRIAL_DURATION - msElapsed);
+
+      if (msLeft > 0) {
+        setLicenseStatus("trial");
+        const totalSeconds = Math.floor(msLeft / 1000);
+        const hours = Math.floor(totalSeconds / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+        setTrialTimeLeft(`${hours}j ${minutes}m ${seconds}d`);
+      } else {
+        setLicenseStatus("expired");
+        setTrialTimeLeft("Habis");
+      }
+    };
+
+    checkLicense();
+    const interval = setInterval(checkLicense, 1000);
+    return () => clearInterval(interval);
   }, []);
+
+  const handleActivateVoucher = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const cleanCode = voucherCode.replace(/[^0-9]/g, "");
+    if (cleanCode.length !== 8) {
+      toast.error("Kode voucher harus terdiri dari 8 digit angka!");
+      return;
+    }
+
+    setIsValidating(true);
+    try {
+      const isValid = await validateFirebaseVoucher(cleanCode);
+      if (isValid) {
+        localStorage.setItem("hpprofit_device_authorized", "true");
+        localStorage.setItem("hpprofit_show_thank_you", "true");
+        window.dispatchEvent(new Event("hpprofit_license_updated"));
+        setLicenseStatus("authorized");
+        setShowVoucherInput(false);
+        setVoucherCode("");
+        toast.success("Aktivasi Lisensi Berhasil!", {
+          description: "Aplikasi Anda sekarang telah aktif permanen seumur hidup."
+        });
+      } else {
+        toast.error("Voucher Tidak Valid atau Sudah Digunakan", {
+          description: "Silakan periksa kembali kode voucher Anda."
+        });
+      }
+    } catch (err) {
+      toast.error("Gagal terhubung ke server", {
+        description: "Pastikan koneksi internet Anda aktif untuk memvalidasi voucher."
+      });
+    } finally {
+      setIsValidating(false);
+    }
+  };
 
   if (!mounted) {
     return (
@@ -297,13 +378,85 @@ export default function PengaturanPage() {
               <h4 className="text-lg sm:text-xl font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">HPProfit Premium</h4>
               <p className="text-[11px] sm:text-xs text-zinc-500 mb-4 sm:mb-6 font-mono">Versi 1.0.0 (Build 2026)</p>
 
-              <div className="w-full space-y-2 sm:space-y-3 text-xs sm:text-sm">
-                <div className="flex justify-between items-center pb-2 sm:pb-3 border-b border-zinc-200 dark:border-zinc-800/60">
+              <div className="w-full space-y-2.5 sm:space-y-3.5 text-xs sm:text-sm">
+                {/* STATUS LISENSI */}
+                <div className="flex justify-between items-center pb-2.5 sm:pb-3 border-b border-zinc-200 dark:border-zinc-800/60">
                   <span className="text-zinc-500 dark:text-zinc-400">Status Lisensi</span>
-                  <span className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-green-600 dark:bg-emerald-500/10 text-white dark:text-emerald-400 font-semibold text-[10px] sm:text-xs border border-emerald-200 dark:border-emerald-500/20">
-                    Aktivasi Berhasil
-                  </span>
+                  {licenseStatus === "authorized" ? (
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-semibold text-[10px] sm:text-xs border border-emerald-500/20">
+                      <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
+                      Teraktivasi Permanen
+                    </span>
+                  ) : licenseStatus === "trial" ? (
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-sm bg-amber-500/10 text-amber-600 dark:text-amber-400 font-semibold text-[10px] sm:text-xs border border-amber-500/20">
+                      <Clock className="w-3.5 h-3.5 text-amber-500 animate-spin" />
+                      Masa Trial - Uji Coba
+                    </span>
+                  ) : (
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-red-500/10 text-red-600 dark:text-red-400 font-semibold text-[10px] sm:text-xs border border-red-500/20">
+                      Trial Kedaluwarsa
+                    </span>
+                  )}
                 </div>
+
+                {/* SISA WAKTU TRIAL */}
+                {licenseStatus === "trial" && (
+                  <div className="flex justify-between items-center pb-2.5 sm:pb-3 border-b border-zinc-200 dark:border-zinc-800/60">
+                    <span className="text-zinc-500 dark:text-zinc-400">Sisa Waktu Trial</span>
+                    <span className="font-mono font-bold text-amber-600 dark:text-amber-400 text-xs sm:text-sm">
+                      {trialTimeLeft || "Memuat..."}
+                    </span>
+                  </div>
+                )}
+
+                {/* INPUT / TOMBOL AKTIVASI VOUCHER JIKA BELUM PERMANEN */}
+                {licenseStatus !== "authorized" && (
+                  <div className="pt-1 pb-1">
+                    {!showVoucherInput ? (
+                      <Button
+                        type="button"
+                        size="sm"
+                        onClick={() => setShowVoucherInput(true)}
+                        className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-sm shadow-sm gap-1.5 text-xs h-9"
+                      >
+                        <KeyRound className="w-3.5 h-3.5" />
+                        Aktivasi Lisensi Permanen
+                      </Button>
+                    ) : (
+                      <form onSubmit={handleActivateVoucher} className="space-y-2 p-3 bg-zinc-100/80 dark:bg-zinc-800/60 rounded-sm border border-zinc-200 dark:border-zinc-700/60 animate-in fade-in duration-300">
+                        <div className="flex items-center justify-between">
+                          <span className="text-[11px] font-medium text-zinc-700 dark:text-zinc-300">Masukkan 8 Digit Kode Voucher</span>
+                          <button
+                            type="button"
+                            onClick={() => { setShowVoucherInput(false); setVoucherCode(""); }}
+                            className="text-[10px] text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 underline"
+                          >
+                            Batal
+                          </button>
+                        </div>
+                        <div className="flex gap-2">
+                          <Input
+                            type="text"
+                            maxLength={8}
+                            placeholder="Contoh: 12345678"
+                            value={voucherCode}
+                            onChange={(e) => setVoucherCode(e.target.value.replace(/[^0-9]/g, ""))}
+                            className="h-9 text-xs tracking-widest text-center font-mono"
+                            autoFocus
+                          />
+                          <Button
+                            type="submit"
+                            size="sm"
+                            disabled={isValidating || voucherCode.length !== 8}
+                            className="h-9 text-xs shrink-0 bg-emerald-600 hover:bg-emerald-700 text-white"
+                          >
+                            {isValidating ? "Validasi..." : "Aktifkan"}
+                          </Button>
+                        </div>
+                      </form>
+                    )}
+                  </div>
+                )}
                 <div className="flex justify-between items-center pb-2 sm:pb-3 border-b border-zinc-200 dark:border-zinc-800/60">
                   <span className="text-zinc-500 dark:text-zinc-400">Server Keamanan</span>
                   <span className="font-semibold text-zinc-700 dark:text-zinc-300 flex items-center gap-1.5">

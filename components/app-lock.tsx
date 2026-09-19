@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { ShieldAlert, KeyRound, MessageCircle, Clock, PartyPopper } from "lucide-react";
+import { ShieldAlert, KeyRound, MessageCircle, Clock, PartyPopper, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
@@ -81,6 +81,22 @@ export function AppLock({ children }: { children: React.ReactNode }) {
       setTrialExpired(true);
       setIsMounted(true);
     }
+
+    const handleLicenseUpdate = () => {
+      if (localStorage.getItem(AUTH_KEY) === "true") {
+        setIsAuthorized(true);
+        setInTrialMode(false);
+        setTrialExpired(false);
+      }
+    };
+
+    window.addEventListener("hpprofit_license_updated", handleLicenseUpdate);
+    window.addEventListener("storage", handleLicenseUpdate);
+
+    return () => {
+      window.removeEventListener("hpprofit_license_updated", handleLicenseUpdate);
+      window.removeEventListener("storage", handleLicenseUpdate);
+    };
   }, []);
 
   const handleTrialExpire = () => {
@@ -255,6 +271,7 @@ export function AppLock({ children }: { children: React.ReactNode }) {
 
 // Komponen terpisah untuk Timer agar tidak me-render ulang seluruh aplikasi setiap 1 detik
 function TrialCountdown({ trialStartMs, onExpire }: { trialStartMs: number, onExpire: () => void }) {
+  const [isVisible, setIsVisible] = useState(true);
   const [timeLeft, setTimeLeft] = useState(() => {
     const msElapsed = Date.now() - trialStartMs;
     return Math.max(0, (TRIAL_DAYS * 24 * 60 * 60 * 1000) - msElapsed);
@@ -284,14 +301,26 @@ function TrialCountdown({ trialStartMs, onExpire }: { trialStartMs: number, onEx
     return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   };
 
+  if (!isVisible) return null;
+
   return (
-    <div className="fixed bottom-24 md:bottom-6 right-7 z-50 animate-in fade-in slide-in-from-bottom-4 duration-500 delay-1000 fill-mode-both pointer-events-none">
-      <div className="bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 border border-zinc-800 dark:border-zinc-200 shadow-2xl px-5 py-3 rounded-sm flex flex-col gap-1 items-center justify-center">
-        <span className="text-[10px] text-emerald-500 font-bold tracking-widest uppercase">
+    <div className="fixed bottom-24 md:bottom-6 right-7 z-50 animate-in fade-in slide-in-from-bottom-4 duration-500 delay-1000 fill-mode-both">
+      <div className="relative bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 border border-zinc-800 dark:border-zinc-200 shadow-2xl px-6 py-3.5 rounded-sm flex flex-col gap-1 items-center justify-center">
+        {/* Tombol X melayang keluar di sudut kanan atas card */}
+        <button
+          type="button"
+          onClick={() => setIsVisible(false)}
+          className="absolute -top-2.5 -right-2.5 w-6 h-6 rounded-full bg-zinc-800 dark:bg-zinc-100 text-zinc-300 dark:text-zinc-600 hover:bg-red-500 hover:text-white dark:hover:bg-red-500 dark:hover:text-white border border-zinc-700 dark:border-zinc-300 shadow-md flex items-center justify-center transition-all duration-200 cursor-pointer active:scale-90 z-10"
+          title="Tutup sementara"
+          aria-label="Tutup notifikasi masa trial"
+        >
+          <X className="w-3 h-3 stroke-[2.5]" />
+        </button>
+
+        <span className="text-[10px] text-emerald-500 dark:text-emerald-600 font-bold tracking-widest uppercase">
           Sisa Masa Trial
         </span>
         <div className="flex items-center gap-2">
-
           <span className="text-xl font-mono font-bold tracking-wider">
             {formatTime(timeLeft)}
           </span>
