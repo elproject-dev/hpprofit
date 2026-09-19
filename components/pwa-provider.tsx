@@ -33,11 +33,24 @@ export function PWAProvider() {
     }
   }, []);
 
-  // Cegah menu konteks / opsi bawaan browser saat elemen ditekan lama (long-press) di Android PWA
+  // Cegah menu konteks bawaan HANYA saat ditekan lama (long-press) di layar sentuh (mobile/Android),
+  // sedangkan klik kanan mouse di Web/Desktop tetap berfungsi normal 100%.
   useEffect(() => {
+    let lastTouchTime = 0;
+
+    const handleTouchStart = () => {
+      lastTouchTime = Date.now();
+    };
+
     const handleContextMenu = (e: MouseEvent) => {
+      // Jika TIDAK dipicu oleh sentuhan jari (misal klik kanan mouse di desktop/laptop), biarkan normal
+      const isFromTouch = Date.now() - lastTouchTime < 1000;
+      if (!isFromTouch) {
+        return;
+      }
+
       const target = e.target as HTMLElement | null;
-      // Tetap izinkan opsi teks (seperti paste) jika user menekan kolom input form
+      // Tetap izinkan opsi konteks jika user menekan kolom input form
       if (
         target &&
         (target.tagName === "INPUT" ||
@@ -46,11 +59,16 @@ export function PWAProvider() {
       ) {
         return;
       }
+
+      // Cegah popup menu Chrome hanya pada long-press layar sentuh
       e.preventDefault();
     };
 
+    window.addEventListener("touchstart", handleTouchStart, { passive: true });
     window.addEventListener("contextmenu", handleContextMenu, { passive: false });
+
     return () => {
+      window.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("contextmenu", handleContextMenu);
     };
   }, []);

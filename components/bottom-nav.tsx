@@ -15,11 +15,6 @@ import {
 
 const navItems = [
   {
-    title: "Dashboard",
-    url: "/",
-    icon: LayoutDashboardIcon,
-  },
-  {
     title: "Bahan",
     url: "/bahan-baku",
     icon: PackageIcon,

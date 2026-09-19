@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Settings, HelpCircle, Menu, X } from "lucide-react";
+import { Settings, HelpCircle, Menu, X, LayoutDashboard } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function FloatingMenu() {
@@ -100,6 +100,16 @@ export function FloatingMenu() {
             : "opacity-0 translate-y-4 scale-95 pointer-events-none"
         )}
       >
+        <Link
+          href="/"
+          className="flex items-center gap-3 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 p-3 rounded-full shadow-lg border border-zinc-200 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-colors group relative"
+          aria-label="Dashboard"
+        >
+          <LayoutDashboard size={22} />
+          <span className="text-sm font-medium pl-2 opacity-0 group-hover:opacity-100 absolute left-14 bg-white dark:bg-zinc-800 px-3 py-1.5 rounded-md shadow-sm border border-zinc-200 dark:border-zinc-700 pointer-events-none transition-opacity whitespace-nowrap">
+            Dashboard
+          </span>
+        </Link>
         <Link
           href="/pengaturan"
           className="flex items-center gap-3 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 p-3 rounded-full shadow-lg border border-zinc-200 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-colors group relative"

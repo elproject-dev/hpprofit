@@ -365,11 +365,11 @@ export function ProdukInnerForm({
             type="button"
             variant="outline"
             size="sm"
-            className="shrink-0"
+            className="shrink-0 px-2 sm:px-3"
             onClick={() => setKomposisiBahan([...komposisiBahan, { id: Math.random().toString(), bahanId: "", takaran: "", pembagi: "1", searchQuery: "" }])}
           >
-            <PlusIcon className="w-4 h-4 mr-2" />
-            Tambah Bahan Baku
+            <PlusIcon className="w-4 h-4 sm:mr-2" />
+            <span className="hidden sm:inline">Tambah Bahan Baku</span>
           </Button>
         </div>
 
@@ -620,11 +620,11 @@ export function ProdukInnerForm({
             type="button"
             variant="outline"
             size="sm"
-            className="shrink-0"
+            className="shrink-0 px-2 sm:px-3"
             onClick={() => setKomposisiPackage([...komposisiPackage, { id: Math.random().toString(), packagingId: "", jumlah: "", pembagi: "1", searchQuery: "" }])}
           >
-            <PlusIcon className="w-4 h-4 mr-2" />
-            Tambah Packaging
+            <PlusIcon className="w-4 h-4 sm:mr-2" />
+            <span className="hidden sm:inline">Tambah Packaging</span>
           </Button>
         </div>
 
@@ -885,16 +885,14 @@ export function ProdukInnerForm({
             </p>
           </div>
           <div className="p-3 border rounded-md bg-card space-y-1 shadow-sm relative">
-            <div className="flex justify-between items-start gap-1">
-              <p className="text-xs text-muted-foreground font-medium">Margin Kotor</p>
-              {marginKotor > 0 && marginKotor < 40 && (
-                <span className="text-[9px] uppercase font-bold px-1.5 py-0.5 bg-yellow-100 text-yellow-800 rounded">Low Margin</span>
-              )}
-              {marginKotor >= 40 && (
-                <span className="text-[9px] uppercase font-bold px-1.5 py-0.5 bg-emerald-100 text-emerald-800 rounded">Good</span>
-              )}
-            </div>
-            <div className="flex flex-wrap items-center gap-1.5">
+            <p className="text-xs text-muted-foreground font-medium pr-10">Margin Kotor</p>
+            {marginKotor > 0 && marginKotor < 40 && (
+              <span className="absolute top-2.5 right-2.5 text-[8px] uppercase font-bold px-1.5 py-0.5 bg-yellow-100 text-yellow-800 rounded">Low</span>
+            )}
+            {marginKotor >= 40 && (
+              <span className="absolute top-2.5 right-2.5 text-[8px] uppercase font-bold px-1.5 py-0.5 bg-emerald-100 text-emerald-800 rounded">Good</span>
+            )}
+            <div className="flex flex-wrap items-center gap-1.5 mt-1">
               <p className={`text-base md:text-lg font-bold ${marginKotor < 0 ? 'text-destructive' : 'text-emerald-600 dark:text-emerald-500'}`}>
                 {marginKotor.toFixed(1)}%
               </p>

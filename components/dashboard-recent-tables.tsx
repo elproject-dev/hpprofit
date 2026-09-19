@@ -39,8 +39,8 @@ export function DashboardRecentTables() {
       {/* TABEL KIRI: RIWAYAT PRODUKSI TERAKHIR */}
       <Card className="shadow-sm rounded-none border-none bg-white dark:bg-zinc-950/50">
         <CardHeader className="pb-3">
-          <CardTitle className="text-lg">Riwayat Produksi Terakhir</CardTitle>
-          <CardDescription>5 aktivitas produksi massal terakhir</CardDescription>
+          <CardTitle className="text-medium">Riwayat Produksi Terakhir</CardTitle>
+          <CardDescription className="text-xs">5 aktivitas produksi massal terakhir</CardDescription>
         </CardHeader>
         <CardContent>
           {recentTransaksi.length === 0 ? (
@@ -80,8 +80,8 @@ export function DashboardRecentTables() {
       {/* TABEL KANAN: BAHAN BAKU TERBARU */}
       <Card className="shadow-sm rounded-none border-none bg-white dark:bg-zinc-950/50">
         <CardHeader className="pb-3">
-          <CardTitle className="text-lg">Bahan Baku Terbaru</CardTitle>
-          <CardDescription>5 master data bahan baku yang baru ditambahkan</CardDescription>
+          <CardTitle className="text-medium">Bahan Baku Terbaru</CardTitle>
+          <CardDescription className="text-xs">5 master data bahan baku yang baru ditambahkan</CardDescription>
         </CardHeader>
         <CardContent>
           {recentBahanBaku.length === 0 ? (

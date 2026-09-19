@@ -123,6 +123,7 @@
   --primary-foreground: hsl(0, 0%, 98%);
   --ring: hsl(240, 5.9%, 10%);
 }
+
 .theme-zinc.dark {
   --primary: hsl(0, 0%, 98%);
   --primary-foreground: hsl(240, 5.9%, 10%);
@@ -133,6 +134,7 @@
   --primary-foreground: hsl(0, 0%, 100%);
   --ring: hsl(346, 87%, 43%);
 }
+
 .theme-rose.dark {
   --primary: hsl(346, 87%, 43%);
   --primary-foreground: hsl(0, 0%, 100%);
@@ -143,6 +145,7 @@
   --primary-foreground: hsl(0, 0%, 100%);
   --ring: hsl(221, 83%, 53%);
 }
+
 .theme-blue.dark {
   --primary: hsl(221, 83%, 53%);
   --primary-foreground: hsl(0, 0%, 100%);
@@ -153,6 +156,7 @@
   --primary-foreground: hsl(0, 0%, 100%);
   --ring: hsl(24, 95%, 53%);
 }
+
 .theme-orange.dark {
   --primary: hsl(24, 95%, 53%);
   --primary-foreground: hsl(0, 0%, 100%);
@@ -164,17 +168,27 @@
 .font-poppins {
   --font-sans: var(--font-poppins);
 }
+
 .font-nunito {
   --font-sans: var(--font-nunito);
 }
+
 .font-outfit {
   --font-sans: var(--font-outfit);
 }
 
 /* Global Font Size Scaling */
-html.font-size-sm { font-size: 14px; }
-html.font-size-md { font-size: 16px; }
-html.font-size-lg { font-size: 18px; }
+html.font-size-sm {
+  font-size: 14px;
+}
+
+html.font-size-md {
+  font-size: 16px;
+}
+
+html.font-size-lg {
+  font-size: 18px;
+}
 
 
 @layer base {
@@ -184,27 +198,35 @@ html.font-size-lg { font-size: 18px; }
 
   body {
     @apply bg-background text-foreground;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  /* Izinkan seleksi teks pada kolom input agar user tetap bisa mengetik dan paste */
-  input, textarea, [contenteditable="true"] {
-    -webkit-user-select: text;
-    user-select: text;
-  }
-
-  /* Nonaktifkan drag dan menu bawaan pada gambar serta link */
-  img, a {
-    -webkit-touch-callout: none;
-    -webkit-user-drag: none;
   }
 
   html {
     @apply font-sans;
-    -webkit-touch-callout: none;
+  }
+
+  /* Khusus perangkat layar sentuh (Android / Mobile PWA): matikan callout & seleksi teks saat ditekan lama */
+  @media (hover: none) and (pointer: coarse) {
+    body {
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Tetap izinkan seleksi teks pada form input agar bisa mengetik dan paste */
+    input,
+    textarea,
+    [contenteditable="true"] {
+      -webkit-user-select: text;
+      user-select: text;
+    }
+
+    /* Nonaktifkan drag dan menu bawaan pada gambar serta link di mobile */
+    img,
+    a {
+      -webkit-touch-callout: none;
+      -webkit-user-drag: none;
+    }
   }
 }
 
@@ -222,8 +244,8 @@ input[type="number"] {
 
 /* Fix browser autofill blue background styling */
 input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus, 
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
   transition: background-color 5000s ease-in-out 0s;
   -webkit-text-fill-color: currentColor !important;
@@ -233,7 +255,10 @@ input:-webkit-autofill:active {
 ::-webkit-scrollbar {
   display: none;
 }
+
 * {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }

@@ -246,7 +246,7 @@ export function ProdukTable({
                           <MoreVertical className="h-4 w-4" />
                           <span className="sr-only">Buka menu</span>
                         </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
+                        <DropdownMenuContent align="end">
                           <DropdownMenuItem onClick={() => setItemToView(item)}>
                             Detail
                           </DropdownMenuItem>
@@ -328,24 +328,39 @@ export function ProdukTable({
 
             return (
               <div className="space-y-6 mt-4">
-                <div className="flex items-center gap-4">
-                  <div className="w-20 h-20 bg-muted border flex items-center justify-center shrink-0">
-                    {itemToView.foto ? (
-                      <img src={itemToView.foto} alt="" className="w-full h-full object-cover" />
-                    ) : (
-                      <BoxIcon className="w-8 h-8 opacity-50" />
-                    )}
-                  </div>
-                  <div className="flex-1 min-w-0 flex items-start justify-between gap-4">
-                    <div>
-                      <h3 className="font-bold text-xl">{itemToView.nama}</h3>
-                      <span className="inline-flex items-center justify-center px-2 py-1 mt-2 rounded-none text-xs font-medium bg-secondary text-secondary-foreground">
-                        {itemToView.kategori}
-                      </span>
+                <div className="flex flex-col gap-3">
+                  <div className="flex items-center gap-4">
+                    <div className="w-20 h-20 bg-muted border flex items-center justify-center shrink-0">
+                      {itemToView.foto ? (
+                        <img src={itemToView.foto} alt="" className="w-full h-full object-cover" />
+                      ) : (
+                        <BoxIcon className="w-8 h-8 opacity-50" />
+                      )}
                     </div>
-                    <div className="flex gap-0.5 shrink-0 pt-1">
+                    <div className="flex-1 min-w-0 flex items-start justify-between gap-4">
+                      <div>
+                        <h3 className="font-bold text-xl leading-tight">{itemToView.nama}</h3>
+                        <span className="hidden sm:inline-flex items-center justify-center px-2 py-1 mt-2 rounded-none text-xs font-medium bg-secondary text-secondary-foreground print:inline-flex">
+                          {itemToView.kategori}
+                        </span>
+                      </div>
+                      <div className="hidden sm:flex print:flex gap-0.5 shrink-0 pt-1">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className={`w-4 h-4 ${i < stars ? 'fill-yellow-400 text-yellow-400' : 'text-muted-foreground/30'}`} />
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Tampilan Mobile: Kategori & Bintang di bawah layout utama */}
+                  <div className="sm:hidden flex items-center justify-between print:hidden text-[11px] whitespace-nowrap bg-muted/20 px-2 py-1.5 border rounded-sm">
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-muted-foreground uppercase font-medium">Kategori:</span>
+                      <span className="font-bold">{itemToView.kategori}</span>
+                    </div>
+                    <div className="flex gap-0.5 ml-auto">
                       {[...Array(5)].map((_, i) => (
-                        <Star key={i} className={`w-4 h-4 ${i < stars ? 'fill-yellow-400 text-yellow-400' : 'text-muted-foreground/30'}`} />
+                        <Star key={i} className={`w-3.5 h-3.5 ${i < stars ? 'fill-yellow-400 text-yellow-400' : 'text-muted-foreground/30'}`} />
                       ))}
                     </div>
                   </div>
@@ -354,41 +369,79 @@ export function ProdukTable({
                 <div className="space-y-3 border-t pt-4">
                   <h4 className="font-semibold text-sm">Komposisi Bahan Baku</h4>
                   {itemToView.komposisiBahan && itemToView.komposisiBahan.length > 0 ? (
-                    <div className="bg-muted/30 border text-sm rounded-none overflow-hidden">
-                      <table className="w-full [&_th]:border-r [&_td]:border-r [&_th:last-child]:border-r-0 [&_td:last-child]:border-r-0">
-                        <thead className="bg-muted text-left">
-                          <tr>
-                            <th className="p-2 border-b min-w-[120px]">Bahan</th>
-                            <th className="p-2 border-b text-center whitespace-nowrap w-[140px]">Jumlah Dipakai</th>
-                            <th className="p-2 border-b text-center whitespace-nowrap w-[140px]">Bisa Untuk (Porsi)</th>
-                            <th className="p-2 border-b text-right whitespace-nowrap w-[140px]">Pemakaian / Porsi</th>
-                            <th className="p-2 border-b text-right whitespace-nowrap w-[140px]">Biaya</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {itemToView.komposisiBahan.map((k: any, idx: number) => {
-                            const div = parseFloat(k.pembagi) || 1
-                            const biaya = ((k.bahan?.harga || 0) * k.takaran) / div
-                            return (
-                              <tr key={idx} className="border-b last:border-0">
-                                <td className="p-2">{k.bahan?.nama || "Unknown"}</td>
-                                <td className="p-2 text-center text-muted-foreground">{k.takaran} {k.bahan?.satuan}</td>
-                                <td className="p-2 text-center text-muted-foreground">{div} Porsi</td>
-                                <td className="p-2 text-right text-muted-foreground font-medium">
-                                  {parseFloat((parseFloat(k.takaran) / div).toFixed(4))} {k.bahan?.satuan}
-                                </td>
-                                <td className="p-2 text-right">Rp {Math.round(biaya).toLocaleString('id-ID')}</td>
-                              </tr>
-                            )
-                          })}
-                        </tbody>
-                        <tfoot className="bg-muted/50 font-semibold border-t">
-                          <tr>
-                            <td colSpan={4} className="p-2 text-right text-orange-600">Subtotal Bahan</td>
-                            <td className="p-2 text-right text-orange-600">Rp {Math.round(totalHppBahan).toLocaleString('id-ID')}</td>
-                          </tr>
-                        </tfoot>
-                      </table>
+                    <div className="space-y-4">
+                      {/* Desktop & Print: Format Tabel */}
+                      <div className="hidden sm:block print:block bg-muted/30 border text-sm rounded-none overflow-hidden">
+                        <table className="w-full [&_th]:border-r [&_td]:border-r [&_th:last-child]:border-r-0 [&_td:last-child]:border-r-0">
+                          <thead className="bg-muted text-left">
+                            <tr>
+                              <th className="p-2 border-b min-w-[120px]">Bahan</th>
+                              <th className="p-2 border-b text-center whitespace-nowrap w-[140px]">Jumlah Dipakai</th>
+                              <th className="p-2 border-b text-center whitespace-nowrap w-[140px]">Bisa Untuk (Porsi)</th>
+                              <th className="p-2 border-b text-right whitespace-nowrap w-[140px]">Pemakaian / Porsi</th>
+                              <th className="p-2 border-b text-right whitespace-nowrap w-[140px]">Biaya</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {itemToView.komposisiBahan.map((k: any, idx: number) => {
+                              const div = parseFloat(k.pembagi) || 1
+                              const biaya = ((k.bahan?.harga || 0) * k.takaran) / div
+                              return (
+                                <tr key={idx} className="border-b last:border-0">
+                                  <td className="p-2">{k.bahan?.nama || "Unknown"}</td>
+                                  <td className="p-2 text-center text-muted-foreground">{k.takaran} {k.bahan?.satuan}</td>
+                                  <td className="p-2 text-center text-muted-foreground">{div} Porsi</td>
+                                  <td className="p-2 text-right text-muted-foreground font-medium">
+                                    {parseFloat((parseFloat(k.takaran) / div).toFixed(4))} {k.bahan?.satuan}
+                                  </td>
+                                  <td className="p-2 text-right">Rp {Math.round(biaya).toLocaleString('id-ID')}</td>
+                                </tr>
+                              )
+                            })}
+                          </tbody>
+                          <tfoot className="bg-muted/50 font-semibold border-t">
+                            <tr>
+                              <td colSpan={4} className="p-2 text-right text-orange-600">Subtotal Bahan</td>
+                              <td className="p-2 text-right text-orange-600">Rp {Math.round(totalHppBahan).toLocaleString('id-ID')}</td>
+                            </tr>
+                          </tfoot>
+                        </table>
+                      </div>
+
+                      {/* Mobile: Format List Card */}
+                      <div className="sm:hidden print:hidden border rounded-sm divide-y overflow-hidden text-sm">
+                        {itemToView.komposisiBahan.map((k: any, idx: number) => {
+                          const div = parseFloat(k.pembagi) || 1
+                          const biaya = ((k.bahan?.harga || 0) * k.takaran) / div
+                          const pemakaianPerPorsi = parseFloat((parseFloat(k.takaran) / div).toFixed(4))
+                          return (
+                            <div key={idx} className="p-3 bg-card flex flex-col gap-1.5">
+                              <div className="flex justify-between items-start font-bold">
+                                <span className="truncate pr-2 text-primary">{k.bahan?.nama || 'Unknown'}</span>
+                                <span className="shrink-0">Rp {Math.round(biaya).toLocaleString('id-ID')}</span>
+                              </div>
+                              <div className="grid grid-cols-3 gap-2 mt-2 pt-2 border-t text-[10px] text-muted-foreground">
+                                <div className="flex flex-col text-left">
+                                  <span className="uppercase text-[9px] font-medium tracking-wider mb-0.5">Total</span>
+                                  <span className="font-bold text-foreground">{k.takaran} {k.bahan?.satuan}</span>
+                                </div>
+                                <div className="flex flex-col border-x text-center">
+                                  <span className="uppercase text-[9px] font-medium tracking-wider mb-0.5">Bisa Untuk</span>
+                                  <span className="font-bold text-foreground">{div} Porsi</span>
+                                </div>
+                                <div className="flex flex-col text-right">
+                                  <span className="uppercase text-[9px] font-medium tracking-wider mb-0.5">Per Porsi</span>
+                                  <span className="font-bold text-foreground">{pemakaianPerPorsi} {k.bahan?.satuan}</span>
+                                </div>
+                              </div>
+                            </div>
+                          )
+                        })}
+                        <div className="p-3 bg-muted/30 font-bold flex justify-between items-center text-orange-600 border-t">
+                          <span>Subtotal Bahan</span>
+                          <span>Rp {Math.round(totalHppBahan).toLocaleString('id-ID')}</span>
+                        </div>
+                      </div>
                     </div>
                   ) : (
                     <p className="text-sm italic text-muted-foreground">Tidak ada komposisi bahan baku.</p>
@@ -398,41 +451,79 @@ export function ProdukTable({
                 <div className="space-y-3 border-t pt-4">
                   <h4 className="font-semibold text-sm">Komposisi Packaging</h4>
                   {itemToView.komposisiPackage && itemToView.komposisiPackage.length > 0 ? (
-                    <div className="bg-muted/30 border text-sm rounded-none overflow-hidden">
-                      <table className="w-full [&_th]:border-r [&_td]:border-r [&_th:last-child]:border-r-0 [&_td:last-child]:border-r-0">
-                        <thead className="bg-muted text-left">
-                          <tr>
-                            <th className="p-2 border-b min-w-[120px]">Packaging</th>
-                            <th className="p-2 border-b text-center whitespace-nowrap w-[140px]">Jumlah Dipakai</th>
-                            <th className="p-2 border-b text-center whitespace-nowrap w-[140px]">Bisa Untuk (Porsi)</th>
-                            <th className="p-2 border-b text-right whitespace-nowrap w-[140px]">Pemakaian / Porsi</th>
-                            <th className="p-2 border-b text-right whitespace-nowrap w-[140px]">Biaya</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {itemToView.komposisiPackage.map((k: any, idx: number) => {
-                            const div = parseFloat(k.pembagi) || 1
-                            const biaya = ((k.packaging?.harga || 0) * k.jumlah) / div
-                            return (
-                              <tr key={idx} className="border-b last:border-0">
-                                <td className="p-2">{k.packaging?.nama || "Unknown"}</td>
-                                <td className="p-2 text-center text-muted-foreground">{k.jumlah} {k.packaging?.satuan}</td>
-                                <td className="p-2 text-center text-muted-foreground">{div} Porsi</td>
-                                <td className="p-2 text-right text-muted-foreground font-medium">
-                                  {parseFloat((parseFloat(k.jumlah) / div).toFixed(4))} {k.packaging?.satuan}
-                                </td>
-                                <td className="p-2 text-right">Rp {Math.round(biaya).toLocaleString('id-ID')}</td>
-                              </tr>
-                            )
-                          })}
-                        </tbody>
-                        <tfoot className="bg-muted/50 font-semibold border-t">
-                          <tr>
-                            <td colSpan={4} className="p-2 text-right text-orange-600">Subtotal Packaging</td>
-                            <td className="p-2 text-right text-orange-600">Rp {Math.round(totalHppPack).toLocaleString('id-ID')}</td>
-                          </tr>
-                        </tfoot>
-                      </table>
+                    <div className="space-y-4">
+                      {/* Desktop & Print: Format Tabel */}
+                      <div className="hidden sm:block print:block bg-muted/30 border text-sm rounded-none overflow-hidden">
+                        <table className="w-full [&_th]:border-r [&_td]:border-r [&_th:last-child]:border-r-0 [&_td:last-child]:border-r-0">
+                          <thead className="bg-muted text-left">
+                            <tr>
+                              <th className="p-2 border-b min-w-[120px]">Packaging</th>
+                              <th className="p-2 border-b text-center whitespace-nowrap w-[140px]">Jumlah Dipakai</th>
+                              <th className="p-2 border-b text-center whitespace-nowrap w-[140px]">Bisa Untuk (Porsi)</th>
+                              <th className="p-2 border-b text-right whitespace-nowrap w-[140px]">Pemakaian / Porsi</th>
+                              <th className="p-2 border-b text-right whitespace-nowrap w-[140px]">Biaya</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {itemToView.komposisiPackage.map((k: any, idx: number) => {
+                              const div = parseFloat(k.pembagi) || 1
+                              const biaya = ((k.packaging?.harga || 0) * k.jumlah) / div
+                              return (
+                                <tr key={idx} className="border-b last:border-0">
+                                  <td className="p-2">{k.packaging?.nama || "Unknown"}</td>
+                                  <td className="p-2 text-center text-muted-foreground">{k.jumlah} {k.packaging?.satuan}</td>
+                                  <td className="p-2 text-center text-muted-foreground">{div} Porsi</td>
+                                  <td className="p-2 text-right text-muted-foreground font-medium">
+                                    {parseFloat((parseFloat(k.jumlah) / div).toFixed(4))} {k.packaging?.satuan}
+                                  </td>
+                                  <td className="p-2 text-right">Rp {Math.round(biaya).toLocaleString('id-ID')}</td>
+                                </tr>
+                              )
+                            })}
+                          </tbody>
+                          <tfoot className="bg-muted/50 font-semibold border-t">
+                            <tr>
+                              <td colSpan={4} className="p-2 text-right text-orange-600">Subtotal Packaging</td>
+                              <td className="p-2 text-right text-orange-600">Rp {Math.round(totalHppPack).toLocaleString('id-ID')}</td>
+                            </tr>
+                          </tfoot>
+                        </table>
+                      </div>
+
+                      {/* Mobile: Format List Card */}
+                      <div className="sm:hidden print:hidden border rounded-sm divide-y overflow-hidden text-sm">
+                        {itemToView.komposisiPackage.map((k: any, idx: number) => {
+                          const div = parseFloat(k.pembagi) || 1
+                          const biaya = ((k.packaging?.harga || 0) * k.jumlah) / div
+                          const pemakaianPerPorsi = parseFloat((parseFloat(k.jumlah) / div).toFixed(4))
+                          return (
+                            <div key={idx} className="p-3 bg-card flex flex-col gap-1.5">
+                              <div className="flex justify-between items-start font-bold">
+                                <span className="truncate pr-2 text-primary">{k.packaging?.nama || 'Unknown'}</span>
+                                <span className="shrink-0">Rp {Math.round(biaya).toLocaleString('id-ID')}</span>
+                              </div>
+                              <div className="grid grid-cols-3 gap-2 mt-2 pt-2 border-t text-[10px] text-muted-foreground">
+                                <div className="flex flex-col text-left">
+                                  <span className="uppercase text-[9px] font-medium tracking-wider mb-0.5">Total</span>
+                                  <span className="font-bold text-foreground">{k.jumlah} {k.packaging?.satuan}</span>
+                                </div>
+                                <div className="flex flex-col border-x text-center">
+                                  <span className="uppercase text-[9px] font-medium tracking-wider mb-0.5">Bisa Untuk</span>
+                                  <span className="font-bold text-foreground">{div} Porsi</span>
+                                </div>
+                                <div className="flex flex-col text-right">
+                                  <span className="uppercase text-[9px] font-medium tracking-wider mb-0.5">Per Porsi</span>
+                                  <span className="font-bold text-foreground">{pemakaianPerPorsi} {k.packaging?.satuan}</span>
+                                </div>
+                              </div>
+                            </div>
+                          )
+                        })}
+                        <div className="p-3 bg-muted/30 font-bold flex justify-between items-center text-orange-600 border-t">
+                          <span>Subtotal Packaging</span>
+                          <span>Rp {Math.round(totalHppPack).toLocaleString('id-ID')}</span>
+                        </div>
+                      </div>
                     </div>
                   ) : (
                     <p className="text-sm italic text-muted-foreground">Tidak ada komposisi packaging.</p>
@@ -446,43 +537,43 @@ export function ProdukTable({
                   </div>
                 </div>
 
-                <div className="grid grid-cols-4 gap-4 border-t pt-6 mt-2 text-sm items-end">
-                  <div className="p-3 bg-card border shadow-sm flex items-center gap-3">
-                    <div className="shrink-0 text-muted-foreground">
-                      <Calculator className="w-6 h-6 lg:w-8 lg:h-8" strokeWidth={1.5} />
+                <div className="grid grid-cols-2 sm:grid-cols-4 print:grid-cols-4 gap-2 sm:gap-4 border-t pt-6 mt-2 text-sm items-stretch">
+                  <div className="p-2 sm:p-3 bg-card border shadow-sm flex items-center gap-2 sm:gap-3">
+                    <div className="shrink-0 text-muted-foreground hidden sm:block print:block">
+                      <Calculator className="w-5 h-5 lg:w-8 lg:h-8" strokeWidth={1.5} />
                     </div>
                     <div className="flex-1 text-right">
-                      <p className="text-muted-foreground text-[10px] lg:text-xs font-semibold uppercase">Total HPP</p>
-                      <p className="text-sm lg:text-lg font-bold text-emerald-600">Rp {totalHpp.toLocaleString('id-ID')}</p>
+                      <p className="text-muted-foreground text-[9px] sm:text-[10px] lg:text-xs font-semibold uppercase">Total HPP</p>
+                      <p className="text-xs sm:text-sm lg:text-lg font-bold text-emerald-600">Rp {totalHpp.toLocaleString('id-ID')}</p>
                     </div>
                   </div>
-                  <div className="p-3 bg-card border shadow-sm flex items-center gap-3">
-                    <div className="shrink-0 text-muted-foreground">
-                      <Tag className="w-6 h-6 lg:w-8 lg:h-8" strokeWidth={1.5} />
+                  <div className="p-2 sm:p-3 bg-card border shadow-sm flex items-center gap-2 sm:gap-3">
+                    <div className="shrink-0 text-muted-foreground hidden sm:block print:block">
+                      <Tag className="w-5 h-5 lg:w-8 lg:h-8" strokeWidth={1.5} />
                     </div>
                     <div className="flex-1 text-right">
-                      <p className="text-muted-foreground text-[10px] lg:text-xs font-semibold uppercase">Target Jual</p>
-                      <p className="text-sm lg:text-lg font-bold text-orange-600 dark:text-orange-500">Rp {itemToView.hargaJual.toLocaleString('id-ID')}</p>
+                      <p className="text-muted-foreground text-[9px] sm:text-[10px] lg:text-xs font-semibold uppercase">Target Jual</p>
+                      <p className="text-xs sm:text-sm lg:text-lg font-bold text-orange-600 dark:text-orange-500">Rp {itemToView.hargaJual.toLocaleString('id-ID')}</p>
                     </div>
                   </div>
-                  <div className="p-3 bg-card border shadow-sm flex items-center gap-3">
-                    <div className="shrink-0 text-muted-foreground">
-                      <Banknote className="w-6 h-6 lg:w-8 lg:h-8" strokeWidth={1.5} />
+                  <div className="p-2 sm:p-3 bg-card border shadow-sm flex items-center gap-2 sm:gap-3">
+                    <div className="shrink-0 text-muted-foreground hidden sm:block print:block">
+                      <Banknote className="w-5 h-5 lg:w-8 lg:h-8" strokeWidth={1.5} />
                     </div>
                     <div className="flex-1 text-right">
-                      <p className="text-muted-foreground text-[10px] lg:text-xs font-semibold uppercase">Laba Kotor</p>
-                      <p className={`text-sm lg:text-lg font-bold ${laba < 0 ? 'text-destructive' : 'text-emerald-600 dark:text-emerald-500'}`}>
+                      <p className="text-muted-foreground text-[9px] sm:text-[10px] lg:text-xs font-semibold uppercase">Laba Kotor</p>
+                      <p className={`text-xs sm:text-sm lg:text-lg font-bold ${laba < 0 ? 'text-destructive' : 'text-emerald-600 dark:text-emerald-500'}`}>
                         Rp {laba.toLocaleString('id-ID')}
                       </p>
                     </div>
                   </div>
-                  <div className="p-3 bg-card border shadow-sm flex items-center gap-3">
-                    <div className="shrink-0 text-muted-foreground">
-                      <Percent className="w-6 h-6 lg:w-8 lg:h-8" strokeWidth={1.5} />
+                  <div className="p-2 sm:p-3 bg-card border shadow-sm flex items-center gap-2 sm:gap-3">
+                    <div className="shrink-0 text-muted-foreground hidden sm:block print:block">
+                      <Percent className="w-5 h-5 lg:w-8 lg:h-8" strokeWidth={1.5} />
                     </div>
                     <div className="flex-1 text-right">
-                      <p className="text-muted-foreground text-[10px] lg:text-xs font-semibold uppercase">Margin (%)</p>
-                      <p className={`text-sm lg:text-lg font-bold ${margin < 0 ? 'text-destructive' : 'text-emerald-600 dark:text-emerald-500'}`}>
+                      <p className="text-muted-foreground text-[9px] sm:text-[10px] lg:text-xs font-semibold uppercase">Margin (%)</p>
+                      <p className={`text-xs sm:text-sm lg:text-lg font-bold ${margin < 0 ? 'text-destructive' : 'text-emerald-600 dark:text-emerald-500'}`}>
                         {margin.toFixed(1)}%
                       </p>
                     </div>

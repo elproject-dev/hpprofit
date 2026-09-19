@@ -80,7 +80,7 @@ export function PWAInstallPrompt() {
         </button>
 
         <div className="flex items-start gap-4">
-          <div className="w-12 h-12 rounded-[14px] flex items-center justify-center shrink-0 bg-transparent">
+          <div className="w-12 h-12 rounded-sm flex items-center justify-center shrink-0 bg-transparent">
             <img src="/icon.svg" alt="HPProfit" className="w-10 h-10 object-contain drop-shadow-sm" />
           </div>
           <div className="pr-4">
@@ -93,7 +93,7 @@ export function PWAInstallPrompt() {
 
         <div className="flex mt-2">
           <Button
-            className="w-full rounded-xl text-xs h-10 bg-emerald-600 hover:bg-emerald-700 text-white shadow-md shadow-emerald-600/20"
+            className="w-full rounded-sm text-xs h-10 bg-emerald-600 hover:bg-emerald-700 text-white shadow-md shadow-emerald-600/20"
             onClick={handleInstallClick}
           >
             Install Sekarang

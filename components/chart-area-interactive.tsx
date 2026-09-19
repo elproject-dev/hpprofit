@@ -53,36 +53,25 @@ export function ChartAreaInteractive() {
     const dailyData: Record<string, { date: string, pendapatan: number, biaya: number, isReal?: boolean }> = {}
     const today = new Date()
 
-    // SELALU GENERATE DATA DUMMY UNTUK 7 HARI (Agar grafik selalu terlihat penuh)
+    // Inisialisasi 7 hari terakhir dengan nilai 0
     for (let i = 6; i >= 0; i--) {
       const d = new Date(today)
       d.setDate(d.getDate() - i)
       const dateStr = format(d, "yyyy-MM-dd")
       
-      const biaya = Math.floor(Math.random() * 2000000) + 500000
-      const margin = Math.random() * 0.7 + 0.3
-      const pendapatan = Math.floor(biaya * (1 + margin))
-      const isLibur = Math.random() > 0.85
-
       dailyData[dateStr] = { 
         date: dateStr, 
-        pendapatan: isLibur ? 0 : pendapatan, 
-        biaya: isLibur ? 0 : biaya,
-        isReal: false // Flag untuk penanda
+        pendapatan: 0, 
+        biaya: 0,
       }
     }
 
-    // TIMPA DENGAN DATA ASLI JIKA ADA
+    // ISI DENGAN DATA TRANSAKSI ASLI
     transaksis.forEach(tx => {
       const txDateStr = format(new Date(tx.tanggal), "yyyy-MM-dd")
+      
+      // Jika transaksi masuk dalam 7 hari terakhir
       if (dailyData[txDateStr]) {
-        if (!dailyData[txDateStr].isReal) {
-          // Kosongkan data dummy di hari ini karena ada data asli
-          dailyData[txDateStr].pendapatan = 0;
-          dailyData[txDateStr].biaya = 0;
-          dailyData[txDateStr].isReal = true;
-        }
-        
         const produk = produks.find(p => p.id === tx.produkId)
         const hargaJual = produk?.hargaJual || 0
         

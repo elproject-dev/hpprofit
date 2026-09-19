@@ -291,7 +291,7 @@ export function TransaksiTable({
                 const totalBiaya = itemToView.totalHpp + (itemToView.totalBiayaTambahan || 0)
                 const totalLaba = totalTargetJual - totalBiaya
                 const margin = totalTargetJual > 0 ? (totalLaba / totalTargetJual) * 100 : 0
-                
+
                 const getStarRating = (m: number) => {
                   if (m >= 50) return 5
                   if (m >= 40) return 4
@@ -304,70 +304,86 @@ export function TransaksiTable({
 
                 return (
                   <>
-                    <div className="flex items-center gap-4">
-                      <div className="w-16 h-16 bg-muted border flex items-center justify-center shrink-0">
-                        {itemToView.produk?.foto ? (
-                          <img src={itemToView.produk?.foto} alt="" className="w-full h-full object-cover" />
-                        ) : (
-                          <BoxIcon className="w-6 h-6 opacity-50" />
-                        )}
-                      </div>
-                      <div className="flex-1 min-w-0 flex items-start justify-between gap-4">
-                        <div>
-                          <h3 className="font-bold text-lg">{itemToView.produk?.nama}</h3>
-                          <p className="text-sm text-muted-foreground mt-0.5">
-                            {format(new Date(itemToView.tanggal), "d MMMM yyyy, HH:mm", { locale: id })}
-                          </p>
+                    <div className="flex flex-col gap-3">
+                      <div className="flex items-center gap-4">
+                        <div className="w-16 h-16 bg-muted border flex items-center justify-center shrink-0">
+                          {itemToView.produk?.foto ? (
+                            <img src={itemToView.produk?.foto} alt="" className="w-full h-full object-cover" />
+                          ) : (
+                            <BoxIcon className="w-6 h-6 opacity-50" />
+                          )}
                         </div>
-                        <div className="text-right shrink-0">
-                          <p className="text-muted-foreground text-[10px] uppercase font-semibold">Jumlah Produksi</p>
-                          <p className="font-bold text-lg">{Number(itemToView.jumlah).toLocaleString('id-ID')} Unit</p>
-                          <div className="flex gap-0.5 justify-end mt-1">
-                            {[...Array(5)].map((_, i) => (
-                              <Star key={i} className={`w-3.5 h-3.5 ${i < stars ? 'fill-yellow-400 text-yellow-400' : 'text-muted-foreground/30'}`} />
-                            ))}
+                        <div className="flex-1 min-w-0 flex items-start justify-between gap-4">
+                          <div>
+                            <h3 className="font-bold text-lg leading-tight">{itemToView.produk?.nama}</h3>
+                            <p className="text-xs sm:text-sm text-muted-foreground mt-1">
+                              {format(new Date(itemToView.tanggal), "d MMMM yyyy, HH:mm", { locale: id })}
+                            </p>
                           </div>
+                          {/* Tampilan Desktop & Print: Jumlah & Bintang di kanan */}
+                          <div className="hidden sm:block print:block text-right shrink-0">
+                            <p className="text-muted-foreground text-[10px] uppercase font-semibold">Jumlah Produksi</p>
+                            <p className="font-bold text-lg">{Number(itemToView.jumlah).toLocaleString('id-ID')} Unit</p>
+                            <div className="flex gap-0.5 justify-end mt-1">
+                              {[...Array(5)].map((_, i) => (
+                                <Star key={i} className={`w-3.5 h-3.5 ${i < stars ? 'fill-yellow-400 text-yellow-400' : 'text-muted-foreground/30'}`} />
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Tampilan Mobile: Jumlah & Bintang di bawah layout utama (full width) */}
+                      <div className="sm:hidden flex items-center justify-between print:hidden text-[11px] whitespace-nowrap bg-muted/20 px-2 py-1.5 border rounded-md">
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-muted-foreground uppercase font-medium">Jumlah Produksi :</span>
+                          <span className="font-bold">{Number(itemToView.jumlah).toLocaleString('id-ID')} Unit</span>
+                        </div>
+                        <div className="flex gap-0.5 ml-auto">
+                          {[...Array(5)].map((_, i) => (
+                            <Star key={i} className={`w-3.5 h-3.5 ${i < stars ? 'fill-yellow-400 text-yellow-400' : 'text-muted-foreground/30'}`} />
+                          ))}
                         </div>
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-4 gap-4 border-t pt-4 mt-2 text-sm items-end">
-                      <div className="p-3 bg-card border shadow-sm flex items-center gap-3">
-                        <div className="shrink-0 text-muted-foreground">
-                          <Calculator className="w-6 h-6 lg:w-8 lg:h-8" strokeWidth={1.5} />
+                    <div className="grid grid-cols-2 sm:grid-cols-4 print:grid-cols-4 gap-2 sm:gap-4 border-t pt-4 mt-2 text-sm items-stretch">
+                      <div className="p-2 sm:p-3 bg-card border shadow-sm flex items-center gap-2 sm:gap-3">
+                        <div className="shrink-0 text-muted-foreground hidden sm:block print:block">
+                          <Calculator className="w-5 h-5 lg:w-8 lg:h-8" strokeWidth={1.5} />
                         </div>
                         <div className="flex-1 text-right">
-                          <p className="text-muted-foreground text-[10px] lg:text-xs font-semibold uppercase">Total Biaya</p>
-                          <p className="text-sm lg:text-lg font-bold text-emerald-600">Rp {Math.round(totalBiaya).toLocaleString('id-ID')}</p>
+                          <p className="text-muted-foreground text-[9px] sm:text-[10px] lg:text-xs font-semibold uppercase">Total Biaya</p>
+                          <p className="text-xs sm:text-sm lg:text-lg font-bold text-emerald-600">Rp {Math.round(totalBiaya).toLocaleString('id-ID')}</p>
                         </div>
                       </div>
-                      <div className="p-3 bg-card border shadow-sm flex items-center gap-3">
-                        <div className="shrink-0 text-muted-foreground">
-                          <Tag className="w-6 h-6 lg:w-8 lg:h-8" strokeWidth={1.5} />
+                      <div className="p-2 sm:p-3 bg-card border shadow-sm flex items-center gap-2 sm:gap-3">
+                        <div className="shrink-0 text-muted-foreground hidden sm:block print:block">
+                          <Tag className="w-5 h-5 lg:w-8 lg:h-8" strokeWidth={1.5} />
                         </div>
                         <div className="flex-1 text-right">
-                          <p className="text-muted-foreground text-[10px] lg:text-xs font-semibold uppercase">Total Jual</p>
-                          <p className="text-sm lg:text-lg font-bold text-orange-600 dark:text-orange-500">Rp {Math.round(totalTargetJual).toLocaleString('id-ID')}</p>
+                          <p className="text-muted-foreground text-[9px] sm:text-[10px] lg:text-xs font-semibold uppercase">Total Jual</p>
+                          <p className="text-xs sm:text-sm lg:text-lg font-bold text-orange-600 dark:text-orange-500">Rp {Math.round(totalTargetJual).toLocaleString('id-ID')}</p>
                         </div>
                       </div>
-                      <div className="p-3 bg-card border shadow-sm flex items-center gap-3">
-                        <div className="shrink-0 text-muted-foreground">
-                          <Banknote className="w-6 h-6 lg:w-8 lg:h-8" strokeWidth={1.5} />
+                      <div className="p-2 sm:p-3 bg-card border shadow-sm flex items-center gap-2 sm:gap-3">
+                        <div className="shrink-0 text-muted-foreground hidden sm:block print:block">
+                          <Banknote className="w-5 h-5 lg:w-8 lg:h-8" strokeWidth={1.5} />
                         </div>
                         <div className="flex-1 text-right">
-                          <p className="text-muted-foreground text-[10px] lg:text-xs font-semibold uppercase">Total Laba</p>
-                          <p className={`text-sm lg:text-lg font-bold ${totalLaba < 0 ? 'text-destructive' : 'text-emerald-600 dark:text-emerald-500'}`}>
+                          <p className="text-muted-foreground text-[9px] sm:text-[10px] lg:text-xs font-semibold uppercase">Total Laba</p>
+                          <p className={`text-xs sm:text-sm lg:text-lg font-bold ${totalLaba < 0 ? 'text-destructive' : 'text-emerald-600 dark:text-emerald-500'}`}>
                             Rp {Math.round(totalLaba).toLocaleString('id-ID')}
                           </p>
                         </div>
                       </div>
-                      <div className="p-3 bg-card border shadow-sm flex items-center gap-3">
-                        <div className="shrink-0 text-muted-foreground">
-                          <Percent className="w-6 h-6 lg:w-8 lg:h-8" strokeWidth={1.5} />
+                      <div className="p-2 sm:p-3 bg-card border shadow-sm flex items-center gap-2 sm:gap-3">
+                        <div className="shrink-0 text-muted-foreground hidden sm:block print:block">
+                          <Percent className="w-5 h-5 lg:w-8 lg:h-8" strokeWidth={1.5} />
                         </div>
                         <div className="flex-1 text-right">
-                          <p className="text-muted-foreground text-[10px] lg:text-xs font-semibold uppercase">Margin (%)</p>
-                          <p className={`text-sm lg:text-lg font-bold ${margin < 0 ? 'text-destructive' : 'text-emerald-600 dark:text-emerald-500'}`}>
+                          <p className="text-muted-foreground text-[9px] sm:text-[10px] lg:text-xs font-semibold uppercase">Margin (%)</p>
+                          <p className={`text-xs sm:text-sm lg:text-lg font-bold ${margin < 0 ? 'text-destructive' : 'text-emerald-600 dark:text-emerald-500'}`}>
                             {margin.toFixed(1)}%
                           </p>
                         </div>
@@ -388,7 +404,8 @@ export function TransaksiTable({
                     {itemToView.produk?.komposisiBahan && itemToView.produk.komposisiBahan.length > 0 && (
                       <div className="space-y-2">
                         <h4 className="font-semibold text-xs uppercase text-muted-foreground">Bahan Baku Digunakan</h4>
-                        <div className="bg-muted/30 border text-xs rounded-none overflow-hidden">
+                        {/* Desktop & Print: Format Tabel */}
+                        <div className="hidden sm:block print:block bg-muted/30 border text-xs rounded-none overflow-hidden">
                           <table className="w-full [&_th]:border-r [&_td]:border-r [&_th:last-child]:border-r-0 [&_td:last-child]:border-r-0">
                             <thead className="bg-muted text-left">
                               <tr>
@@ -415,13 +432,36 @@ export function TransaksiTable({
                             </tbody>
                           </table>
                         </div>
+
+                        {/* Mobile: Format List Card */}
+                        <div className="sm:hidden print:hidden border rounded-md divide-y overflow-hidden text-sm">
+                          {itemToView.produk.komposisiBahan.map((k: any, idx: number) => {
+                            const div = parseFloat(k.pembagi) || 1
+                            const jumlah = (k.takaran / div) * itemToView.jumlah
+                            const biaya = ((k.bahan?.harga || 0) * k.takaran / div) * itemToView.jumlah
+                            return (
+                              <div key={idx} className="p-3 bg-card flex flex-col gap-1.5">
+                                <div className="flex justify-between items-start font-bold">
+                                  <span className="truncate pr-2 text-primary">{k.bahan?.nama || 'Terhapus'}</span>
+                                  <span className="shrink-0">Rp {Math.round(biaya).toLocaleString('id-ID')}</span>
+                                </div>
+                                <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                                  <span>
+                                    {jumlah.toLocaleString('id-ID', { maximumFractionDigits: 2 })} {k.bahan?.satuan || '-'}
+                                  </span>
+                                </div>
+                              </div>
+                            )
+                          })}
+                        </div>
                       </div>
                     )}
-                    
+
                     {itemToView.produk?.komposisiPackage && itemToView.produk.komposisiPackage.length > 0 && (
                       <div className="space-y-2">
                         <h4 className="font-semibold text-xs uppercase text-muted-foreground">Packaging Digunakan</h4>
-                        <div className="bg-muted/30 border text-xs rounded-none overflow-hidden">
+                        {/* Desktop & Print: Format Tabel */}
+                        <div className="hidden sm:block print:block bg-muted/30 border text-xs rounded-none overflow-hidden">
                           <table className="w-full [&_th]:border-r [&_td]:border-r [&_th:last-child]:border-r-0 [&_td:last-child]:border-r-0">
                             <thead className="bg-muted text-left">
                               <tr>
@@ -448,6 +488,28 @@ export function TransaksiTable({
                             </tbody>
                           </table>
                         </div>
+
+                        {/* Mobile: Format List Card */}
+                        <div className="sm:hidden print:hidden border rounded-md divide-y overflow-hidden text-sm">
+                          {itemToView.produk.komposisiPackage.map((k: any, idx: number) => {
+                            const div = parseFloat(k.pembagi) || 1
+                            const jumlah = (k.jumlah / div) * itemToView.jumlah
+                            const biaya = ((k.packaging?.harga || 0) * k.jumlah / div) * itemToView.jumlah
+                            return (
+                              <div key={idx} className="p-3 bg-card flex flex-col gap-1.5">
+                                <div className="flex justify-between items-start font-bold">
+                                  <span className="truncate pr-2 text-primary">{k.packaging?.nama || 'Terhapus'}</span>
+                                  <span className="shrink-0">Rp {Math.round(biaya).toLocaleString('id-ID')}</span>
+                                </div>
+                                <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                                  <span>
+                                    {Math.ceil(jumlah).toLocaleString('id-ID')} {k.packaging?.satuan || '-'}
+                                  </span>
+                                </div>
+                              </div>
+                            )
+                          })}
+                        </div>
                       </div>
                     )}
                   </div>
@@ -471,7 +533,7 @@ export function TransaksiTable({
               </div>
 
               <div className="bg-emerald-50 dark:bg-emerald-950/30 p-4 border border-emerald-100 dark:border-emerald-900/50 space-y-3">
-                <div className="flex justify-between text-sm font-bold text-xl">
+                <div className="flex justify-between text-sm font-bold text-md">
                   <span>Total Biaya Produksi</span>
                   <span className="text-emerald-600">Rp {Math.round(itemToView.totalHpp + itemToView.totalBiayaTambahan).toLocaleString('id-ID')}</span>
                 </div>
