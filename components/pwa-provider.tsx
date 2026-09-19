@@ -33,5 +33,27 @@ export function PWAProvider() {
     }
   }, []);
 
+  // Cegah menu konteks / opsi bawaan browser saat elemen ditekan lama (long-press) di Android PWA
+  useEffect(() => {
+    const handleContextMenu = (e: MouseEvent) => {
+      const target = e.target as HTMLElement | null;
+      // Tetap izinkan opsi teks (seperti paste) jika user menekan kolom input form
+      if (
+        target &&
+        (target.tagName === "INPUT" ||
+          target.tagName === "TEXTAREA" ||
+          target.isContentEditable)
+      ) {
+        return;
+      }
+      e.preventDefault();
+    };
+
+    window.addEventListener("contextmenu", handleContextMenu, { passive: false });
+    return () => {
+      window.removeEventListener("contextmenu", handleContextMenu);
+    };
+  }, []);
+
   return null;
 }

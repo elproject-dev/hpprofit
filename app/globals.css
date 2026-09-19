@@ -184,10 +184,27 @@ html.font-size-lg { font-size: 18px; }
 
   body {
     @apply bg-background text-foreground;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Izinkan seleksi teks pada kolom input agar user tetap bisa mengetik dan paste */
+  input, textarea, [contenteditable="true"] {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+
+  /* Nonaktifkan drag dan menu bawaan pada gambar serta link */
+  img, a {
+    -webkit-touch-callout: none;
+    -webkit-user-drag: none;
   }
 
   html {
     @apply font-sans;
+    -webkit-touch-callout: none;
   }
 }
 
