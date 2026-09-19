@@ -383,7 +383,7 @@ export default function PengaturanPage() {
                 <div className="flex justify-between items-center pb-2.5 sm:pb-3 border-b border-zinc-200 dark:border-zinc-800/60">
                   <span className="text-zinc-500 dark:text-zinc-400">Status Lisensi</span>
                   {licenseStatus === "authorized" ? (
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 text-emerald-600 dark:text-emerald-400 font-semibold text-[10px] sm:text-xs ">
+                    <span className="inline-flex items-center gap-1.5 py-1 text-emerald-600 dark:text-emerald-400 font-semibold text-[10px] sm:text-xs ">
                       <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
                       Teraktivasi Permanen
                     </span>
