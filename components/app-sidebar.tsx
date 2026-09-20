@@ -98,7 +98,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               render={<Link href="/" />}
             >
               <Aperture className="size-5!" />
-              <span className="text-base font-semibold">HPProfit</span>
+              <span className="text-base font-semibold"><span className="text-emerald-500">HPP</span><span className="text-white">MARGIN</span></span>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

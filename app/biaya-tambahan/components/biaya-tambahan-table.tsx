@@ -117,8 +117,8 @@ export function BiayaTambahanTable({
                         <MoreVertical className="h-4 w-4" />
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuItem onClick={() => onEdit(item)}>Edit</DropdownMenuItem>
-                        <DropdownMenuItem className="text-destructive focus:text-destructive" onClick={() => setItemToDelete(item)}>Hapus</DropdownMenuItem>
+                        <DropdownMenuItem className="text-primary focus:bg-primary focus:text-primary-foreground" onClick={() => onEdit(item)}>Edit</DropdownMenuItem>
+                        <DropdownMenuItem className="text-primary focus:bg-primary focus:text-primary-foreground" onClick={() => setItemToDelete(item)}>Hapus</DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </div>
@@ -186,11 +186,11 @@ export function BiayaTambahanTable({
                           <span className="sr-only">Buka menu</span>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                          <DropdownMenuItem onClick={() => onEdit(item)}>
+                          <DropdownMenuItem className="text-primary focus:bg-primary focus:text-primary-foreground" onClick={() => onEdit(item)}>
                             Edit
                           </DropdownMenuItem>
                           <DropdownMenuItem
-                            className="text-destructive focus:text-destructive"
+                            className="text-primary focus:bg-primary focus:text-primary-foreground"
                             onClick={() => setItemToDelete(item)}
                           >
                             Hapus
@@ -218,7 +218,7 @@ export function BiayaTambahanTable({
             <AlertDialogCancel>Batal</AlertDialogCancel>
             <AlertDialogAction
               onClick={executeDelete}
-              className="bg-destructive text-white hover:bg-destructive/90"
+              className="bg-primary text-primary-foreground hover:bg-primary/90"
             >
               {isPending ? "Menghapus..." : "Ya, Hapus"}
             </AlertDialogAction>

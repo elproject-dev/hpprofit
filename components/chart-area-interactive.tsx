@@ -36,11 +36,11 @@ export const description = "Grafik Batang Performa Keuangan"
 const chartConfig = {
   pendapatan: {
     label: "Potensi Pendapatan",
-    color: "#10b981", // Emerald 500
+    color: "#059669", // Emerald 600
   },
   biaya: {
     label: "Biaya Produksi",
-    color: "#ef4444", // Red 500
+    color: "#dc2626", // Red 600
   },
 } satisfies ChartConfig
 
@@ -98,7 +98,7 @@ export function ChartAreaInteractive() {
           className="aspect-auto h-[350px] w-full"
         >
           <BarChart data={chartData} margin={{ top: 10, right: 12, left: 12, bottom: 0 }}>
-            <CartesianGrid vertical={false} strokeDasharray="3 3" className="stroke-muted-foreground/20" />
+            <CartesianGrid vertical={false} horizontal={false} />
             <XAxis
               dataKey="date"
               tickLine={false}
@@ -107,6 +107,7 @@ export function ChartAreaInteractive() {
               minTickGap={32}
               padding={{ left: 10, right: 10 }}
               tickFormatter={(value) => format(new Date(value), "d MMM", { locale: id })}
+              tick={{ fill: "hsl(var(--primary))" }}
             />
             <YAxis hide width={0} />
             <ChartTooltip
@@ -119,7 +120,7 @@ export function ChartAreaInteractive() {
                       <div className="flex items-center gap-2">
                         <span
                           className="w-2 h-2 rounded-full"
-                          style={{ backgroundColor: name === "pendapatan" ? "#10b981" : "#ef4444" }}
+                          style={{ backgroundColor: name === "pendapatan" ? "#059669" : "#dc2626" }}
                         />
                         <span className="text-muted-foreground capitalize">{name === "pendapatan" ? "Pendapatan" : "Biaya Produksi"}</span>
                       </div>

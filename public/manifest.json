@@ -5,8 +5,8 @@
   "description": "Aplikasi Manajemen HPP & Margin",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#000000",
+  "background_color": "#56311F",
+  "theme_color": "#56311F",
   "orientation": "portrait-primary",
   "icons": [
     {

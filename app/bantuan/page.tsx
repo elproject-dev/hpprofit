@@ -24,18 +24,18 @@ function BantuanSection({
   iconComponent?: React.ReactNode
 }) {
   return (
-    <div className="bg-white/70 dark:bg-zinc-900/80 backdrop-blur-xl border border-zinc-200/60 dark:border-zinc-700/50 rounded-sm shadow-sm transition-all hover:shadow-md overflow-hidden flex flex-col">
+    <div className="bg-[#F3DBC9] border border-primary/20 rounded-sm shadow-sm transition-all hover:shadow-md overflow-hidden flex flex-col">
       <button onClick={onToggle} className="w-full flex items-center justify-between p-4 text-left focus:outline-none">
         <div className="flex items-center gap-3">
           <div className="p-2 bg-primary/10 rounded-full text-primary">
             {iconComponent ? iconComponent : Icon && <Icon className="w-4 h-4" />}
           </div>
           <div>
-            <h3 className="text-sm font-semibold text-zinc-800 dark:text-zinc-200">{title}</h3>
-            <p className="text-xs text-zinc-500 dark:text-zinc-400">{desc}</p>
+            <h3 className="text-sm font-semibold text-primary">{title}</h3>
+            <p className="text-xs text-primary/80">{desc}</p>
           </div>
         </div>
-        <ChevronDown className={cn("w-4 h-4 text-zinc-400 transition-transform duration-300 shrink-0", isOpen && "rotate-180")} />
+        <ChevronDown className={cn("w-4 h-4 text-primary transition-transform duration-300 shrink-0", isOpen && "rotate-180")} />
       </button>
       <div className={cn("grid transition-all duration-300 ease-in-out", isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0")}>
         <div className="overflow-hidden">

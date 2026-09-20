@@ -80,11 +80,11 @@ export function PackagingTable({
                       <span className="sr-only">Buka menu</span>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                      <DropdownMenuItem onClick={() => onEdit(item)}>
+                      <DropdownMenuItem className="text-primary focus:bg-primary focus:text-primary-foreground" onClick={() => onEdit(item)}>
                         Edit
                       </DropdownMenuItem>
                       <DropdownMenuItem
-                        className="text-destructive focus:text-destructive"
+                        className="text-primary focus:bg-primary focus:text-primary-foreground"
                         onClick={() => setItemToDelete(item)}
                       >
                         Hapus
@@ -96,7 +96,7 @@ export function PackagingTable({
                 <div className="flex gap-3">
                   <div className="flex-1 min-w-0 pr-8 flex flex-col justify-between">
                     <h3 className="font-semibold text-xs truncate leading-tight">{item.nama}</h3>
-                    <div className="flex flex-wrap gap-1 mt-auto">
+                    <div className="flex flex-wrap gap-1 mt-1.5">
                       <span className="inline-flex items-center justify-center px-1 py-[2px] rounded text-[8.5px] font-medium bg-secondary text-secondary-foreground leading-none">
                         {item.kategori}
                       </span>
@@ -173,11 +173,11 @@ export function PackagingTable({
                           <span className="sr-only">Buka menu</span>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                          <DropdownMenuItem onClick={() => onEdit(item)}>
+                          <DropdownMenuItem className="text-primary focus:bg-primary focus:text-primary-foreground" onClick={() => onEdit(item)}>
                             Edit
                           </DropdownMenuItem>
                           <DropdownMenuItem
-                            className="text-destructive focus:text-destructive"
+                            className="text-primary focus:bg-primary focus:text-primary-foreground"
                             onClick={() => setItemToDelete(item)}
                           >
                             Hapus
@@ -205,7 +205,7 @@ export function PackagingTable({
             <AlertDialogCancel>Batal</AlertDialogCancel>
             <AlertDialogAction
               onClick={executeDelete}
-              className="bg-destructive text-white hover:bg-destructive/90"
+              className="bg-primary text-primary-foreground hover:bg-primary/90"
             >
               {isPending ? "Menghapus..." : "Ya, Hapus"}
             </AlertDialogAction>

@@ -1,0 +1,20 @@
+--- app/globals.css
++++ app/globals.css
+@@ -130,6 +130,17 @@
+   --primary-foreground: hsl(240, 5.9%, 10%);
+ }
+ 
++.theme-caramel {
++  --primary: hsl(28, 70%, 40%);
++  --primary-foreground: hsl(0, 0%, 100%);
++  --ring: hsl(28, 70%, 40%);
++}
++
++.theme-caramel.dark {
++  --primary: hsl(28, 70%, 40%);
++  --primary-foreground: hsl(0, 0%, 100%);
++}
++
+ .theme-rose {
+   --primary: hsl(346, 87%, 43%);
+   --primary-foreground: hsl(0, 0%, 100%);

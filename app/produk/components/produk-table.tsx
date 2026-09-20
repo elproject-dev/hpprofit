@@ -119,8 +119,8 @@ export function ProdukTable({
                     <DropdownMenuContent align="end">
                       <DropdownMenuItem onClick={() => setItemToView(item)}>Detail</DropdownMenuItem>
                       <DropdownMenuItem onClick={() => handlePrint(item)}>Print Resep</DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => onEdit(item)}>Edit</DropdownMenuItem>
-                      <DropdownMenuItem className="text-destructive focus:text-destructive" onClick={() => setItemToDelete(item)}>Hapus</DropdownMenuItem>
+                      <DropdownMenuItem className="text-primary focus:bg-primary focus:text-primary-foreground" onClick={() => onEdit(item)}>Edit</DropdownMenuItem>
+                      <DropdownMenuItem className="text-primary focus:bg-primary focus:text-primary-foreground" onClick={() => setItemToDelete(item)}>Hapus</DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </div>
@@ -154,15 +154,15 @@ export function ProdukTable({
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Harga Jual</span>
-                    <span className="font-medium text-orange-600 dark:text-orange-500">Rp {item.hargaJual.toLocaleString("id-ID")}</span>
+                    <span className="font-medium text-primary">Rp {item.hargaJual.toLocaleString("id-ID")}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Laba Kotor</span>
-                    <span className={`font-medium ${laba < 0 ? 'text-destructive' : 'text-emerald-600 dark:text-emerald-500'}`}>Rp {laba.toLocaleString("id-ID")}</span>
+                    <span className="font-medium text-primary">Rp {laba.toLocaleString("id-ID")}</span>
                   </div>
                   <div className="flex justify-between items-center pt-0.5">
                     <span className="text-muted-foreground">Margin</span>
-                    <span className={`font-medium ${margin < 0 ? 'text-destructive' : 'text-emerald-600 dark:text-emerald-500'}`}>
+                    <span className="font-medium text-primary">
                       {margin.toFixed(1)}%
                     </span>
                   </div>
@@ -233,11 +233,11 @@ export function ProdukTable({
                       </span>
                     </TableCell>
                     <TableCell className="text-right font-bold">Rp {hpp.toLocaleString("id-ID")}</TableCell>
-                    <TableCell className="text-right font-bold text-orange-600 dark:text-orange-500">Rp {item.hargaJual.toLocaleString("id-ID")}</TableCell>
-                    <TableCell className={`text-right font-bold ${laba < 0 ? 'text-destructive' : 'text-emerald-600 dark:text-emerald-500'}`}>
+                    <TableCell className="text-right font-bold text-primary">Rp {item.hargaJual.toLocaleString("id-ID")}</TableCell>
+                    <TableCell className="text-right font-bold text-primary">
                       Rp {laba.toLocaleString("id-ID")}
                     </TableCell>
-                    <TableCell className={`text-center font-bold ${margin < 0 ? 'text-destructive' : 'text-emerald-600 dark:text-emerald-500'}`}>
+                    <TableCell className="text-center font-bold text-primary">
                       {margin.toFixed(1)}%
                     </TableCell>
                     <TableCell className="text-center">
@@ -253,11 +253,11 @@ export function ProdukTable({
                           <DropdownMenuItem onClick={() => handlePrint(item)}>
                             Print Resep
                           </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => onEdit(item)}>
+                          <DropdownMenuItem className="text-primary focus:bg-primary focus:text-primary-foreground" onClick={() => onEdit(item)}>
                             Edit
                           </DropdownMenuItem>
                           <DropdownMenuItem
-                            className="text-destructive focus:text-destructive"
+                            className="text-primary focus:bg-primary focus:text-primary-foreground"
                             onClick={() => setItemToDelete(item)}
                           >
                             Hapus
@@ -285,7 +285,7 @@ export function ProdukTable({
             <AlertDialogCancel>Batal</AlertDialogCancel>
             <AlertDialogAction
               onClick={executeDelete}
-              className="bg-destructive text-white hover:bg-destructive/90"
+              className="bg-primary text-primary-foreground hover:bg-primary/90"
             >
               {isPending ? "Menghapus..." : "Ya, Hapus"}
             </AlertDialogAction>
@@ -296,7 +296,7 @@ export function ProdukTable({
       <Dialog open={!!itemToView} onOpenChange={(open) => !open && setItemToView(null)}>
         <DialogContent className="sm:max-w-4xl w-full max-h-[90vh] overflow-y-auto rounded-none">
           <DialogHeader className="print:hidden">
-            <DialogTitle>Detail Resep Produk</DialogTitle>
+            <DialogTitle className="text-primary">Detail Resep Produk</DialogTitle>
           </DialogHeader>
 
           {itemToView && (() => {
@@ -339,14 +339,14 @@ export function ProdukTable({
                     </div>
                     <div className="flex-1 min-w-0 flex items-start justify-between gap-4">
                       <div>
-                        <h3 className="font-bold text-xl leading-tight">{itemToView.nama}</h3>
+                        <h3 className="font-bold text-xl leading-tight text-primary">{itemToView.nama}</h3>
                         <span className="hidden sm:inline-flex items-center justify-center px-2 py-1 mt-2 rounded-none text-xs font-medium bg-secondary text-secondary-foreground print:inline-flex">
                           {itemToView.kategori}
                         </span>
                       </div>
                       <div className="hidden sm:flex print:flex gap-0.5 shrink-0 pt-1">
                         {[...Array(5)].map((_, i) => (
-                          <Star key={i} className={`w-4 h-4 ${i < stars ? 'fill-yellow-400 text-yellow-400' : 'text-muted-foreground/30'}`} />
+                          <Star key={i} className={`w-4 h-4 ${i < stars ? 'fill-[#AC7F5E] text-[#AC7F5E]' : 'text-muted-foreground/30'}`} />
                         ))}
                       </div>
                     </div>
@@ -360,20 +360,20 @@ export function ProdukTable({
                     </div>
                     <div className="flex gap-0.5 ml-auto">
                       {[...Array(5)].map((_, i) => (
-                        <Star key={i} className={`w-3.5 h-3.5 ${i < stars ? 'fill-yellow-400 text-yellow-400' : 'text-muted-foreground/30'}`} />
+                        <Star key={i} className={`w-3.5 h-3.5 ${i < stars ? 'fill-[#AC7F5E] text-[#AC7F5E]' : 'text-muted-foreground/30'}`} />
                       ))}
                     </div>
                   </div>
                 </div>
 
                 <div className="space-y-3 border-t pt-4">
-                  <h4 className="font-semibold text-sm">Komposisi Bahan Baku</h4>
+                  <h4 className="font-semibold text-sm text-primary">Komposisi Bahan Baku</h4>
                   {itemToView.komposisiBahan && itemToView.komposisiBahan.length > 0 ? (
                     <div className="space-y-4">
                       {/* Desktop & Print: Format Tabel */}
                       <div className="hidden sm:block print:block bg-muted/30 border text-sm rounded-none overflow-hidden">
                         <table className="w-full [&_th]:border-r [&_td]:border-r [&_th:last-child]:border-r-0 [&_td:last-child]:border-r-0">
-                          <thead className="bg-muted text-left">
+                          <thead className="bg-muted text-left text-primary">
                             <tr>
                               <th className="p-2 border-b min-w-[120px]">Bahan</th>
                               <th className="p-2 border-b text-center whitespace-nowrap w-[140px]">Jumlah Dipakai</th>
@@ -401,8 +401,8 @@ export function ProdukTable({
                           </tbody>
                           <tfoot className="bg-muted/50 font-semibold border-t">
                             <tr>
-                              <td colSpan={4} className="p-2 text-right text-orange-600">Subtotal Bahan</td>
-                              <td className="p-2 text-right text-orange-600">Rp {Math.round(totalHppBahan).toLocaleString('id-ID')}</td>
+                              <td colSpan={4} className="p-2 text-right text-primary">Subtotal Bahan</td>
+                              <td className="p-2 text-right text-primary">Rp {Math.round(totalHppBahan).toLocaleString('id-ID')}</td>
                             </tr>
                           </tfoot>
                         </table>
@@ -437,7 +437,7 @@ export function ProdukTable({
                             </div>
                           )
                         })}
-                        <div className="p-3 bg-muted/30 font-bold flex justify-between items-center text-orange-600 border-t">
+                        <div className="p-3 bg-muted/30 font-bold flex justify-between items-center text-primary border-t">
                           <span>Subtotal Bahan</span>
                           <span>Rp {Math.round(totalHppBahan).toLocaleString('id-ID')}</span>
                         </div>
@@ -449,13 +449,13 @@ export function ProdukTable({
                 </div>
 
                 <div className="space-y-3 border-t pt-4">
-                  <h4 className="font-semibold text-sm">Komposisi Packaging</h4>
+                  <h4 className="font-semibold text-sm text-primary">Komposisi Packaging</h4>
                   {itemToView.komposisiPackage && itemToView.komposisiPackage.length > 0 ? (
                     <div className="space-y-4">
                       {/* Desktop & Print: Format Tabel */}
                       <div className="hidden sm:block print:block bg-muted/30 border text-sm rounded-none overflow-hidden">
                         <table className="w-full [&_th]:border-r [&_td]:border-r [&_th:last-child]:border-r-0 [&_td:last-child]:border-r-0">
-                          <thead className="bg-muted text-left">
+                          <thead className="bg-muted text-left text-primary">
                             <tr>
                               <th className="p-2 border-b min-w-[120px]">Packaging</th>
                               <th className="p-2 border-b text-center whitespace-nowrap w-[140px]">Jumlah Dipakai</th>
@@ -483,8 +483,8 @@ export function ProdukTable({
                           </tbody>
                           <tfoot className="bg-muted/50 font-semibold border-t">
                             <tr>
-                              <td colSpan={4} className="p-2 text-right text-orange-600">Subtotal Packaging</td>
-                              <td className="p-2 text-right text-orange-600">Rp {Math.round(totalHppPack).toLocaleString('id-ID')}</td>
+                              <td colSpan={4} className="p-2 text-right text-primary">Subtotal Packaging</td>
+                              <td className="p-2 text-right text-primary">Rp {Math.round(totalHppPack).toLocaleString('id-ID')}</td>
                             </tr>
                           </tfoot>
                         </table>
@@ -519,7 +519,7 @@ export function ProdukTable({
                             </div>
                           )
                         })}
-                        <div className="p-3 bg-muted/30 font-bold flex justify-between items-center text-orange-600 border-t">
+                        <div className="p-3 bg-muted/30 font-bold flex justify-between items-center text-primary border-t">
                           <span>Subtotal Packaging</span>
                           <span>Rp {Math.round(totalHppPack).toLocaleString('id-ID')}</span>
                         </div>
@@ -533,7 +533,7 @@ export function ProdukTable({
                 <div className="flex justify-end border-t pt-4">
                   <div className="flex items-center gap-6 px-2 py-2 bg-muted/50 border font-bold text-base">
                     <span>GRAND TOTAL HPP</span>
-                    <span className="text-emerald-600">Rp {totalHpp.toLocaleString('id-ID')}</span>
+                    <span className="text-primary">Rp {totalHpp.toLocaleString('id-ID')}</span>
                   </div>
                 </div>
 
@@ -544,7 +544,7 @@ export function ProdukTable({
                     </div>
                     <div className="flex-1 text-right">
                       <p className="text-muted-foreground text-[9px] sm:text-[10px] lg:text-xs font-semibold uppercase">Total HPP</p>
-                      <p className="text-xs sm:text-sm lg:text-lg font-bold text-emerald-600">Rp {totalHpp.toLocaleString('id-ID')}</p>
+                      <p className="text-xs sm:text-sm lg:text-lg font-bold text-primary">Rp {totalHpp.toLocaleString('id-ID')}</p>
                     </div>
                   </div>
                   <div className="p-2 sm:p-3 bg-card border shadow-sm flex items-center gap-2 sm:gap-3">
@@ -553,7 +553,7 @@ export function ProdukTable({
                     </div>
                     <div className="flex-1 text-right">
                       <p className="text-muted-foreground text-[9px] sm:text-[10px] lg:text-xs font-semibold uppercase">Target Jual</p>
-                      <p className="text-xs sm:text-sm lg:text-lg font-bold text-orange-600 dark:text-orange-500">Rp {itemToView.hargaJual.toLocaleString('id-ID')}</p>
+                      <p className="text-xs sm:text-sm lg:text-lg font-bold text-primary">Rp {itemToView.hargaJual.toLocaleString('id-ID')}</p>
                     </div>
                   </div>
                   <div className="p-2 sm:p-3 bg-card border shadow-sm flex items-center gap-2 sm:gap-3">
@@ -562,7 +562,7 @@ export function ProdukTable({
                     </div>
                     <div className="flex-1 text-right">
                       <p className="text-muted-foreground text-[9px] sm:text-[10px] lg:text-xs font-semibold uppercase">Laba Kotor</p>
-                      <p className={`text-xs sm:text-sm lg:text-lg font-bold ${laba < 0 ? 'text-destructive' : 'text-emerald-600 dark:text-emerald-500'}`}>
+                      <p className="text-xs sm:text-sm lg:text-lg font-bold text-primary">
                         Rp {laba.toLocaleString('id-ID')}
                       </p>
                     </div>
@@ -573,7 +573,7 @@ export function ProdukTable({
                     </div>
                     <div className="flex-1 text-right">
                       <p className="text-muted-foreground text-[9px] sm:text-[10px] lg:text-xs font-semibold uppercase">Margin (%)</p>
-                      <p className={`text-xs sm:text-sm lg:text-lg font-bold ${margin < 0 ? 'text-destructive' : 'text-emerald-600 dark:text-emerald-500'}`}>
+                      <p className="text-xs sm:text-sm lg:text-lg font-bold text-primary">
                         {margin.toFixed(1)}%
                       </p>
                     </div>

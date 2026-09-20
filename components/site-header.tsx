@@ -31,7 +31,7 @@ export function SiteHeader() {
           orientation="vertical"
           className="mx-2 h-4 data-vertical:self-auto hidden md:block"
         />
-        <h1 className="text-base font-semibold ml-auto">{title}</h1>
+        <h1 className="text-base font-semibold ml-auto text-primary">{title}</h1>
       </div>
     </header>
   )

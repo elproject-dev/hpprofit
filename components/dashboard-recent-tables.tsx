@@ -37,7 +37,7 @@ export function DashboardRecentTables() {
     <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 lg:grid-cols-2">
 
       {/* TABEL KIRI: RIWAYAT PRODUKSI TERAKHIR */}
-      <Card className="shadow-sm rounded-none border-none bg-white dark:bg-zinc-950/50">
+      <Card className="shadow-sm rounded-none border-none">
         <CardHeader className="pb-3">
           <CardTitle className="text-medium">Riwayat Produksi Terakhir</CardTitle>
           <CardDescription className="text-xs">5 aktivitas produksi massal terakhir</CardDescription>
@@ -78,7 +78,7 @@ export function DashboardRecentTables() {
       </Card>
 
       {/* TABEL KANAN: BAHAN BAKU TERBARU */}
-      <Card className="shadow-sm rounded-none border-none bg-white dark:bg-zinc-950/50">
+      <Card className="shadow-sm rounded-none border-none">
         <CardHeader className="pb-3">
           <CardTitle className="text-medium">Bahan Baku Terbaru</CardTitle>
           <CardDescription className="text-xs">5 master data bahan baku yang baru ditambahkan</CardDescription>

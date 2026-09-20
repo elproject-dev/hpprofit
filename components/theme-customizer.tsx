@@ -40,7 +40,13 @@ export function ThemeCustomizerProvider({ children }: { children: React.ReactNod
     
     if (storedColor) setColorScheme(storedColor);
     if (storedFont) setFontFamily(storedFont);
-    if (storedSize) setFontSize(storedSize);
+    if (storedSize) {
+      setFontSize(storedSize);
+    } else {
+      if (window.innerWidth < 768) {
+        setFontSize("sm");
+      }
+    }
 
     const storedH = localStorage.getItem("theme-custom-h");
     const storedS = localStorage.getItem("theme-custom-s");

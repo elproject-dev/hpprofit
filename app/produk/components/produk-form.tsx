@@ -204,69 +204,69 @@ export function ProdukInnerForm({
     try {
       if (initialData) {
         await db.transaction('rw', db.produk, db.produkKomposisiBahan, db.produkKomposisiPackaging, async () => {
-           await db.produk.update(initialData.id, {
-             nama: formData.get("nama") as string,
-             kategori: formData.get("kategori") as string,
-             hargaJual: parseInt(formData.get("hargaJual") as string, 10),
-             foto: formData.get("foto") as string | null,
-             updatedAt: new Date()
-           })
-           
-           const oldBahan = await db.produkKomposisiBahan.where('produkId').equals(initialData.id).toArray()
-           await db.produkKomposisiBahan.bulkDelete(oldBahan.map(b => b.id))
-           
-           const oldPack = await db.produkKomposisiPackaging.where('produkId').equals(initialData.id).toArray()
-           await db.produkKomposisiPackaging.bulkDelete(oldPack.map(p => p.id))
-           
-           const newBahan = validBahan.map(b => ({
-             id: Date.now().toString() + Math.random(),
-             produkId: initialData.id,
-             bahanId: b.bahanId,
-             takaran: parseFloat(b.takaran),
-             pembagi: parseFloat(b.pembagi) || 1
-           }))
-           if (newBahan.length > 0) await db.produkKomposisiBahan.bulkAdd(newBahan)
-           
-           const newPack = validPackage.map(p => ({
-             id: Date.now().toString() + Math.random(),
-             produkId: initialData.id,
-             packagingId: p.packagingId,
-             jumlah: parseFloat(p.jumlah),
-             pembagi: parseFloat(p.pembagi) || 1
-           }))
-           if (newPack.length > 0) await db.produkKomposisiPackaging.bulkAdd(newPack)
+          await db.produk.update(initialData.id, {
+            nama: formData.get("nama") as string,
+            kategori: formData.get("kategori") as string,
+            hargaJual: parseInt(formData.get("hargaJual") as string, 10),
+            foto: formData.get("foto") as string | null,
+            updatedAt: new Date()
+          })
+
+          const oldBahan = await db.produkKomposisiBahan.where('produkId').equals(initialData.id).toArray()
+          await db.produkKomposisiBahan.bulkDelete(oldBahan.map(b => b.id))
+
+          const oldPack = await db.produkKomposisiPackaging.where('produkId').equals(initialData.id).toArray()
+          await db.produkKomposisiPackaging.bulkDelete(oldPack.map(p => p.id))
+
+          const newBahan = validBahan.map(b => ({
+            id: Date.now().toString() + Math.random(),
+            produkId: initialData.id,
+            bahanId: b.bahanId,
+            takaran: parseFloat(b.takaran),
+            pembagi: parseFloat(b.pembagi) || 1
+          }))
+          if (newBahan.length > 0) await db.produkKomposisiBahan.bulkAdd(newBahan)
+
+          const newPack = validPackage.map(p => ({
+            id: Date.now().toString() + Math.random(),
+            produkId: initialData.id,
+            packagingId: p.packagingId,
+            jumlah: parseFloat(p.jumlah),
+            pembagi: parseFloat(p.pembagi) || 1
+          }))
+          if (newPack.length > 0) await db.produkKomposisiPackaging.bulkAdd(newPack)
         })
         toast.add({ title: "Produk berhasil diubah!", type: "success" })
       } else {
         await db.transaction('rw', db.produk, db.produkKomposisiBahan, db.produkKomposisiPackaging, async () => {
-           const produkId = Date.now().toString()
-           await db.produk.add({
-             id: produkId,
-             nama: formData.get("nama") as string,
-             kategori: formData.get("kategori") as string,
-             hargaJual: parseInt(formData.get("hargaJual") as string, 10),
-             foto: formData.get("foto") as string | null,
-             createdAt: new Date(),
-             updatedAt: new Date()
-           })
-           
-           const newBahan = validBahan.map(b => ({
-             id: Date.now().toString() + Math.random(),
-             produkId: produkId,
-             bahanId: b.bahanId,
-             takaran: parseFloat(b.takaran),
-             pembagi: parseFloat(b.pembagi) || 1
-           }))
-           if (newBahan.length > 0) await db.produkKomposisiBahan.bulkAdd(newBahan)
-           
-           const newPack = validPackage.map(p => ({
-             id: Date.now().toString() + Math.random(),
-             produkId: produkId,
-             packagingId: p.packagingId,
-             jumlah: parseFloat(p.jumlah),
-             pembagi: parseFloat(p.pembagi) || 1
-           }))
-           if (newPack.length > 0) await db.produkKomposisiPackaging.bulkAdd(newPack)
+          const produkId = Date.now().toString()
+          await db.produk.add({
+            id: produkId,
+            nama: formData.get("nama") as string,
+            kategori: formData.get("kategori") as string,
+            hargaJual: parseInt(formData.get("hargaJual") as string, 10),
+            foto: formData.get("foto") as string | null,
+            createdAt: new Date(),
+            updatedAt: new Date()
+          })
+
+          const newBahan = validBahan.map(b => ({
+            id: Date.now().toString() + Math.random(),
+            produkId: produkId,
+            bahanId: b.bahanId,
+            takaran: parseFloat(b.takaran),
+            pembagi: parseFloat(b.pembagi) || 1
+          }))
+          if (newBahan.length > 0) await db.produkKomposisiBahan.bulkAdd(newBahan)
+
+          const newPack = validPackage.map(p => ({
+            id: Date.now().toString() + Math.random(),
+            produkId: produkId,
+            packagingId: p.packagingId,
+            jumlah: parseFloat(p.jumlah),
+            pembagi: parseFloat(p.pembagi) || 1
+          }))
+          if (newPack.length > 0) await db.produkKomposisiPackaging.bulkAdd(newPack)
         })
         setPreview(null)
         setHargaJual("")
@@ -430,7 +430,7 @@ export function ProdukInnerForm({
                         type="button"
                         variant="ghost"
                         size="icon"
-                        className="absolute top-2 right-2 text-destructive h-8 w-8"
+                        className="absolute top-2 right-2 text-primary hover:bg-primary hover:text-white h-8 w-8"
                         onClick={() => setKomposisiBahan(komposisiBahan.filter((_, i) => i !== index))}
                       >
                         <Trash2Icon className="w-4 h-4" />
@@ -594,7 +594,7 @@ export function ProdukInnerForm({
                             type="button"
                             variant="default"
                             size="icon"
-                            className="h-9 w-9 rounded-none bg-red-600 hover:bg-red-700 text-white"
+                            className="h-9 w-9 rounded-none bg-primary hover:bg-primary/90 text-white"
                             onClick={() => {
                               setKomposisiBahan(komposisiBahan.filter((_, i) => i !== index))
                             }}
@@ -685,7 +685,7 @@ export function ProdukInnerForm({
                         type="button"
                         variant="ghost"
                         size="icon"
-                        className="absolute top-2 right-2 text-destructive h-8 w-8"
+                        className="absolute top-2 right-2 text-primary hover:bg-primary hover:text-white h-8 w-8"
                         onClick={() => setKomposisiPackage(komposisiPackage.filter((_, i) => i !== index))}
                       >
                         <Trash2Icon className="w-4 h-4" />
@@ -849,7 +849,7 @@ export function ProdukInnerForm({
                             type="button"
                             variant="default"
                             size="icon"
-                            className="h-9 w-9 rounded-none bg-red-600 hover:bg-red-700 text-white"
+                            className="h-9 w-9 rounded-none bg-primary hover:bg-primary/90 text-white"
                             onClick={() => {
                               setKomposisiPackage(komposisiPackage.filter((_, i) => i !== index))
                             }}
@@ -876,24 +876,24 @@ export function ProdukInnerForm({
           </div>
           <div className="p-3 border rounded-md bg-card space-y-1 shadow-sm">
             <p className="text-xs text-muted-foreground font-medium">Target Jual</p>
-            <p className="text-base md:text-lg font-bold text-orange-600 dark:text-orange-500">Rp {parseInt(hargaJual.replace(/\./g, "") || "0", 10).toLocaleString('id-ID')}</p>
+            <p className="text-base md:text-lg font-bold text-primary">Rp {parseInt(hargaJual.replace(/\./g, "") || "0", 10).toLocaleString('id-ID')}</p>
           </div>
           <div className="p-3 border rounded-md bg-card space-y-1 shadow-sm">
             <p className="text-xs text-muted-foreground font-medium">Laba Kotor</p>
-            <p className={`text-base md:text-lg font-bold ${labaKotor < 0 ? 'text-destructive' : 'text-emerald-600 dark:text-emerald-500'}`}>
+            <p className="text-base md:text-lg font-bold text-primary">
               Rp {labaKotor.toLocaleString('id-ID')}
             </p>
           </div>
           <div className="p-3 border rounded-md bg-card space-y-1 shadow-sm relative">
             <p className="text-xs text-muted-foreground font-medium pr-10">Margin Kotor</p>
             {marginKotor > 0 && marginKotor < 40 && (
-              <span className="absolute top-2.5 right-2.5 text-[8px] uppercase font-bold px-1.5 py-0.5 bg-yellow-100 text-yellow-800 rounded">Low</span>
+              <span className="absolute top-2.5 right-2.5 text-[8px] uppercase font-bold px-1.5 py-0.5 bg-primary text-white rounded">Low</span>
             )}
             {marginKotor >= 40 && (
-              <span className="absolute top-2.5 right-2.5 text-[8px] uppercase font-bold px-1.5 py-0.5 bg-emerald-100 text-emerald-800 rounded">Good</span>
+              <span className="absolute top-2.5 right-2.5 text-[8px] uppercase font-bold px-1.5 py-0.5 bg-primary text-white rounded">Good</span>
             )}
             <div className="flex flex-wrap items-center gap-1.5 mt-1">
-              <p className={`text-base md:text-lg font-bold ${marginKotor < 0 ? 'text-destructive' : 'text-emerald-600 dark:text-emerald-500'}`}>
+              <p className="text-base md:text-lg font-bold text-primary">
                 {marginKotor.toFixed(1)}%
               </p>
             </div>

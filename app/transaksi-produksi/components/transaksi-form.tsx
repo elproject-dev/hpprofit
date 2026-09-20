@@ -326,11 +326,11 @@ export function TransaksiForm({
                   </div>
                   {selectedProduk && (
                     isEditingTarget ? (
-                      <Button type="button" variant="outline" size="icon" className="shrink-0 text-emerald-600 hover:text-emerald-700 h-8 w-8" onClick={handleUpdateTarget} disabled={isPending}>
+                      <Button type="button" variant="outline" size="icon" className="shrink-0 text-primary hover:text-primary/80 h-8 w-8" onClick={handleUpdateTarget} disabled={isPending}>
                         <CheckIcon className="w-4 h-4" />
                       </Button>
                     ) : (
-                      <Button type="button" variant="outline" size="icon" className="shrink-0 text-orange-600 hover:text-orange-700 h-8 w-8" onClick={() => setIsEditingTarget(true)} title="Edit Target Jual Permanen" disabled={isPending}>
+                      <Button type="button" variant="outline" size="icon" className="shrink-0 text-primary hover:text-primary/80 h-8 w-8" onClick={() => setIsEditingTarget(true)} title="Edit Target Jual Permanen" disabled={isPending}>
                         <Edit2Icon className="w-4 h-4" />
                       </Button>
                     )
@@ -428,7 +428,7 @@ export function TransaksiForm({
                               type="button"
                               variant="outline"
                               size="icon"
-                              className="shrink-0 text-destructive h-8 w-8 border hover:bg-destructive hover:text-white rounded-none"
+                              className="shrink-0 text-primary h-8 w-8 border hover:bg-primary hover:text-primary-foreground rounded-none"
                               onClick={() => setBiayaTambahan(biayaTambahan.filter((_, i) => i !== index))}
                             >
                               <Trash2Icon className="w-4 h-4" />
@@ -595,7 +595,7 @@ export function TransaksiForm({
                                   type="button"
                                   variant="outline"
                                   size="icon"
-                                  className="h-8 w-8 rounded-none border text-destructive hover:bg-destructive hover:text-white"
+                                  className="h-8 w-8 rounded-none border text-primary hover:bg-primary hover:text-primary-foreground"
                                   onClick={() => setBiayaTambahan(biayaTambahan.filter((_, i) => i !== index))}
                                 >
                                   <Trash2Icon className="w-4 h-4" />
@@ -623,25 +623,25 @@ export function TransaksiForm({
                   <p className="text-sm md:text-base lg:text-lg font-bold">Rp {Math.round(totalBiayaTambahan).toLocaleString('id-ID')}</p>
                 </div>
                 <div className="p-3 border rounded-none bg-card space-y-1 shadow-sm">
-                  <p className="text-[10px] md:text-xs text-emerald-700 dark:text-emerald-500 uppercase font-semibold whitespace-nowrap overflow-hidden text-ellipsis">HPP Satuan</p>
-                  <p className="text-base md:text-lg lg:text-xl font-black text-emerald-600 dark:text-emerald-500">
+                  <p className="text-[10px] md:text-xs text-primary uppercase font-semibold whitespace-nowrap overflow-hidden text-ellipsis">HPP Satuan</p>
+                  <p className="text-base md:text-lg lg:text-xl font-black text-primary">
                     Rp {Math.round(hppPerSatuan).toLocaleString('id-ID')}
                   </p>
                 </div>
                 <div className="p-3 border rounded-none bg-card space-y-1 shadow-sm">
                   <p className="text-[10px] md:text-xs text-muted-foreground uppercase font-semibold whitespace-nowrap overflow-hidden text-ellipsis">Target Jual</p>
-                  <p className="text-sm md:text-lg lg:text-xl font-black text-orange-600 dark:text-orange-500">
+                  <p className="text-sm md:text-lg lg:text-xl font-black text-primary">
                     Rp {Math.round(selectedProduk.hargaJual).toLocaleString('id-ID')}
                   </p>
                 </div>
                 <div className="p-3 border rounded-none bg-card flex flex-col justify-between gap-1 shadow-sm">
                   <div className="flex items-center justify-between gap-2">
-                    <p className="text-[10px] md:text-xs text-emerald-700 dark:text-emerald-500 uppercase font-semibold whitespace-nowrap overflow-hidden text-ellipsis">Total Margin</p>
-                    <span className={`text-[9px] md:text-[10px] font-bold px-1.5 py-0.5 rounded-none ${marginRasio < 0 ? 'bg-destructive/10 text-destructive' : 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-500'}`}>
+                    <p className="text-[10px] md:text-xs text-primary uppercase font-semibold whitespace-nowrap overflow-hidden text-ellipsis">Total Margin</p>
+                    <span className={`text-[9px] md:text-[10px] font-bold px-1.5 py-0.5 rounded-none bg-primary/10 text-primary`}>
                       {marginRasio.toFixed(1)}%
                     </span>
                   </div>
-                  <p className={`text-sm md:text-lg lg:text-xl font-black ${marginRasio < 0 ? 'text-destructive' : 'text-emerald-600 dark:text-emerald-500'}`}>
+                  <p className={`text-sm md:text-lg lg:text-xl font-black text-primary`}>
                     Rp {Math.round((selectedProduk.hargaJual - hppPerSatuan) * parsedJumlah).toLocaleString('id-ID')}
                   </p>
                 </div>

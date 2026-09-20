@@ -169,27 +169,27 @@ export function AppLock({ children }: { children: React.ReactNode }) {
         {/* POPUP TERIMA KASIH (HANYA MUNCUL SEKALI) */}
         {showThankYou && (
           <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-500">
-            <div className="bg-white dark:bg-zinc-950 w-full max-w-lg rounded-sm shadow-2xl overflow-hidden border border-zinc-200/50 dark:border-zinc-800/50 animate-in zoom-in-95 duration-500">
-              <div className="bg-gradient-to-br from-emerald-500 to-teal-600 p-8 flex flex-col items-center justify-center text-center relative overflow-hidden">
+            <div className="bg-card w-full max-w-lg rounded-sm shadow-2xl overflow-hidden border border-primary/20 animate-in zoom-in-95 duration-500">
+              <div className="bg-primary p-8 flex flex-col items-center justify-center text-center relative overflow-hidden">
                 {/* Efek Confetti Sederhana (Menggunakan CSS) */}
                 <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] pointer-events-none"></div>
                 <div className="w-24 h-24 flex items-center justify-center mb-6 relative z-10">
                   <img src="/icon.svg" alt="HPProfit Logo" className="w-full h-full object-contain drop-shadow-xl" />
                 </div>
-                <h2 className="text-2xl font-bold text-white mb-2 tracking-tight">Aktivasi Berhasil!</h2>
-                <p className="text-emerald-50 text-sm font-medium">Aplikasi ini sekarang menjadi milik Anda selamanya.</p>
+                <h2 className="text-2xl font-bold text-primary-foreground mb-2 tracking-tight">Aktivasi Berhasil!</h2>
+                <p className="text-primary-foreground/90 text-sm font-medium">Aplikasi ini sekarang menjadi milik Anda selamanya.</p>
               </div>
 
               <div className="p-8 text-center space-y-6">
-                <p className="text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed">
-                  Terima kasih banyak telah mempercayai dan membeli lisensi premium <strong className="text-zinc-900 dark:text-zinc-100 font-semibold">HPProfit</strong>.
+                <p className="text-primary/70 text-sm leading-relaxed">
+                  Terima kasih banyak telah mempercayai dan membeli lisensi premium <strong className="text-primary font-semibold">HPP-MARGIN</strong>.
                   <br /><br />
                   Semoga aplikasi ini dapat membantu bisnis Anda semakin berkembang, pembukuan lebih rapi, dan meraup keuntungan setiap harinya!
                 </p>
 
                 <Button
                   onClick={closeThankYou}
-                  className="w-full h-12 text-[15px] font-medium bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-zinc-100 dark:hover:bg-zinc-200 dark:text-zinc-900 rounded-sm shadow-lg transition-transform active:scale-95"
+                  className="w-full h-12 text-[15px] font-medium bg-primary hover:bg-primary/90 text-primary-foreground rounded-sm shadow-lg transition-transform active:scale-95"
                 >
                   Mulai Gunakan Aplikasi
                 </Button>
@@ -208,35 +208,35 @@ export function AppLock({ children }: { children: React.ReactNode }) {
 
   // Jika diblokir (Trial habis)
   return (
-    <div className="fixed inset-0 z-[9999] bg-zinc-50/90 dark:bg-zinc-950/90 backdrop-blur-md flex flex-col items-center justify-center p-4">
+    <div className="fixed inset-0 z-[9999] bg-background/90 backdrop-blur-md flex flex-col items-center justify-center p-4">
       <div className={cn(
-        "max-w-md w-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-sm shadow-2xl p-8 flex flex-col items-center text-center transition-transform overflow-hidden relative",
+        "max-w-md w-full bg-card border border-primary/20 rounded-sm shadow-2xl p-8 flex flex-col items-center text-center transition-transform overflow-hidden relative",
         error && "animate-in slide-in-from-left-2 duration-75 repeat-3"
       )}>
-        {/* Dekorasi merah */}
-        <div className="absolute -top-20 -right-20 w-40 h-40 bg-red-500/10 rounded-full blur-3xl pointer-events-none" />
+        {/* Dekorasi primer */}
+        <div className="absolute -top-20 -right-20 w-40 h-40 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="w-20 h-20 bg-red-100 dark:bg-red-900/40 rounded-full flex items-center justify-center mb-6 shadow-inner shadow-red-200 dark:shadow-red-900/50">
-          <ShieldAlert className="w-10 h-10 text-red-600 dark:text-red-400" />
+        <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mb-6 shadow-inner shadow-primary/20">
+          <ShieldAlert className="w-10 h-10 text-primary" />
         </div>
 
-        <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100 mb-2 font-heading tracking-tight">
+        <h1 className="text-2xl font-bold text-primary mb-2 font-heading tracking-tight">
           Masa Trial Habis
         </h1>
-        <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-8 leading-relaxed px-4">
+        <p className="text-sm text-primary/70 mb-8 leading-relaxed px-4">
           Waktu uji coba gratis <strong>{TRIAL_DAYS} hari</strong> Anda telah kedaluwarsa. Silakan masukkan Kode Voucher untuk mengaktifkan aplikasi secara permanen.
         </p>
 
         <form onSubmit={handleSubmit} className="w-full space-y-4 relative z-10">
           <div className="relative group">
-            <KeyRound className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-400 group-focus-within:text-emerald-500 transition-colors" />
+            <KeyRound className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-primary/50 group-focus-within:text-primary transition-colors" />
             <Input
               type="text"
               placeholder="Masukkan 8 Angka Voucher"
               value={pin}
               onChange={(e) => setPin(e.target.value)}
               className={cn(
-                "pl-11 h-14 text-center text-lg tracking-[0.3em] rounded-sm transition-all shadow-sm",
+                "pl-11 h-14 text-center text-lg tracking-[0.3em] rounded-sm transition-all shadow-sm border-primary/20 focus-visible:ring-primary/20 focus-visible:border-primary",
                 error && "border-red-500 focus-visible:ring-red-500 dark:border-red-500/50"
               )}
               maxLength={8}
@@ -247,18 +247,18 @@ export function AppLock({ children }: { children: React.ReactNode }) {
           <Button
             type="submit"
             disabled={isValidating || pin.length < 8}
-            className="w-full h-10 rounded-sm bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-zinc-200 dark:text-zinc-900 text-white font-medium text-[15px] shadow-lg transition-transform active:scale-[0.98] disabled:opacity-50"
+            className="w-full h-10 rounded-sm bg-primary hover:bg-primary/90 text-primary-foreground font-medium text-[15px] shadow-lg transition-transform active:scale-[0.98] disabled:opacity-50"
           >
             {isValidating ? "Memeriksa ke Server..." : "Aktivasi Sekarang"}
           </Button>
         </form>
 
-        <div className="mt-8 pt-6 border-t border-zinc-100 dark:border-zinc-800 w-full relative z-10">
-          <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-3">Belum punya kode voucher?</p>
+        <div className="mt-8 pt-6 border-t border-primary/20 w-full relative z-10">
+          <p className="text-sm text-primary/70 mb-3">Belum punya kode voucher?</p>
           <Button
             variant="outline"
             onClick={contactAdmin}
-            className="w-full h-10 rounded-sm border-emerald-200 bg-emerald-50/50 hover:bg-emerald-100 text-emerald-700 dark:border-emerald-900/50 dark:bg-emerald-900/20 dark:hover:bg-emerald-900/40 dark:text-emerald-400 transition-all"
+            className="w-full h-10 rounded-sm border-primary/20 bg-primary/5 hover:bg-primary/10 text-primary transition-all"
           >
             <MessageCircle className="w-4 h-4 mr-2" />
             Hubungi Admin via WhatsApp
@@ -305,19 +305,19 @@ function TrialCountdown({ trialStartMs, onExpire }: { trialStartMs: number, onEx
 
   return (
     <div className="fixed bottom-24 md:bottom-6 right-7 z-50 animate-in fade-in slide-in-from-bottom-4 duration-500 delay-1000 fill-mode-both">
-      <div className="relative bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 border border-zinc-800 dark:border-zinc-200 shadow-2xl px-6 py-3.5 rounded-sm flex flex-col gap-1 items-center justify-center">
+      <div className="relative bg-primary text-primary-foreground border border-primary/20 shadow-2xl px-6 py-3.5 rounded-sm flex flex-col gap-1 items-center justify-center">
         {/* Tombol X melayang keluar di sudut kanan atas card */}
         <button
           type="button"
           onClick={() => setIsVisible(false)}
-          className="absolute -top-2.5 -right-2.5 w-6 h-6 rounded-full bg-zinc-800 dark:bg-zinc-100 text-zinc-300 dark:text-zinc-600 hover:bg-red-500 hover:text-white dark:hover:bg-red-500 dark:hover:text-white border border-zinc-700 dark:border-zinc-300 shadow-md flex items-center justify-center transition-all duration-200 cursor-pointer active:scale-90 z-10"
+          className="absolute -top-2.5 -right-2.5 w-6 h-6 rounded-full bg-primary-foreground text-primary hover:bg-red-500 hover:text-white border-transparent shadow-md flex items-center justify-center transition-all duration-200 cursor-pointer active:scale-90 z-10"
           title="Tutup sementara"
           aria-label="Tutup notifikasi masa trial"
         >
           <X className="w-3 h-3 stroke-[2.5]" />
         </button>
 
-        <span className="text-[10px] text-emerald-500 dark:text-emerald-600 font-bold tracking-widest uppercase">
+        <span className="text-[10px] text-primary-foreground/80 font-bold tracking-widest uppercase">
           Sisa Masa Trial
         </span>
         <div className="flex items-center gap-2">

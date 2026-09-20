@@ -2,7 +2,7 @@
 
 import { useTheme } from "next-themes";
 import { useThemeCustomizer } from "@/components/theme-customizer";
-import { Check, Monitor, Moon, Sun, Palette, Type, ChevronDown, Info, Clock, KeyRound, ShieldCheck } from "lucide-react";
+import { Check, Monitor, Moon, Sun, Palette, Type, ChevronDown, Info, Clock, KeyRound, ShieldCheck, Phone, HelpCircle, AArrowUp, BookType } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { AppLayout } from "@/components/app-layout";
 import { useEffect, useState } from "react";
@@ -12,11 +12,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 const colors = [
-  { name: "Emerald (Default)", value: "emerald", class: "bg-emerald-500 border-emerald-600" },
-  { name: "Rose", value: "rose", class: "bg-rose-500 border-rose-600" },
-  { name: "Blue", value: "blue", class: "bg-blue-500 border-blue-600" },
-  { name: "Orange", value: "orange", class: "bg-orange-500 border-orange-600" },
-  { name: "Zinc", value: "zinc", class: "bg-zinc-800 border-zinc-900 dark:bg-zinc-200 dark:border-zinc-300" },
+  { name: "Chocolate (Default)", value: "emerald", class: "bg-[#56311F] border-[#3b2215]" },
+  { name: "Hitam (Zinc)", value: "zinc", class: "bg-zinc-800 border-zinc-900 dark:bg-zinc-200 dark:border-zinc-300" },
 ] as const;
 
 const fonts = [
@@ -50,18 +47,18 @@ function SettingSection({
 }) {
 
   return (
-    <div className="bg-white/70 dark:bg-zinc-900/80 backdrop-blur-xl border border-zinc-200/60 dark:border-zinc-700/50 rounded-sm shadow-sm transition-all hover:shadow-md overflow-hidden flex flex-col">
+    <div className="bg-[#F3DBC9] border border-primary/20 rounded-sm shadow-sm transition-all hover:shadow-md overflow-hidden flex flex-col">
       <button onClick={onToggle} className="w-full flex items-center justify-between p-4 text-left focus:outline-none">
         <div className="flex items-center gap-3">
           <div className="p-2 bg-primary/10 rounded-full text-primary">
             {iconComponent ? iconComponent : Icon && <Icon className="w-4 h-4" />}
           </div>
           <div>
-            <h3 className="text-sm font-semibold text-zinc-800 dark:text-zinc-200">{title}</h3>
-            <p className="text-xs text-zinc-500 dark:text-zinc-400">{desc}</p>
+            <h3 className="text-sm font-semibold text-primary">{title}</h3>
+            <p className="text-xs text-primary/80">{desc}</p>
           </div>
         </div>
-        <ChevronDown className={cn("w-4 h-4 text-zinc-400 transition-transform duration-300 shrink-0", isOpen && "rotate-180")} />
+        <ChevronDown className={cn("w-4 h-4 text-primary transition-transform duration-300 shrink-0", isOpen && "rotate-180")} />
       </button>
       <div className={cn("grid transition-all duration-300 ease-in-out", isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0")}>
         <div className="overflow-hidden">
@@ -179,41 +176,11 @@ export default function PengaturanPage() {
     <AppLayout>
       <div className="flex-1 space-y-6 p-4 md:p-6 w-full animate-in fade-in duration-500">
         <div className="flex items-start">
-          <h2 className="text-xl font-bold tracking-tight font-heading text-zinc-900 dark:text-zinc-100">Personalisasi</h2>
+          <h2 className="text-xl font-bold tracking-tight font-heading text-primary">Personalisasi</h2>
         </div>
 
         <div className="flex flex-col gap-4">
 
-          {/* TEMA (Light / Dark) */}
-          <SettingSection
-            title="Mode Tema"
-            desc="Terang, gelap, atau sistem."
-            isOpen={openSection === "Mode Tema"}
-            onToggle={() => toggleSection("Mode Tema")}
-            iconComponent={<><Sun className="w-4 h-4 dark:hidden" /><Moon className="w-4 h-4 hidden dark:block" /></>}
-          >
-            <div className="grid grid-cols-3 gap-2 pt-1">
-              {[
-                { name: "Terang", value: "light", icon: Sun },
-                { name: "Gelap", value: "dark", icon: Moon },
-                { name: "Sistem", value: "system", icon: Monitor },
-              ].map((t) => (
-                <button
-                  key={t.value}
-                  onClick={() => setTheme(t.value)}
-                  className={cn(
-                    "flex flex-col items-center justify-center p-3 rounded-sm border transition-all",
-                    theme === t.value
-                      ? "border-primary bg-primary/5 text-primary shadow-sm"
-                      : "border-zinc-200 dark:border-zinc-800 text-zinc-500 hover:bg-zinc-50 dark:hover:bg-zinc-900"
-                  )}
-                >
-                  <t.icon className="w-5 h-5 mb-1.5" />
-                  <span className="text-xs font-medium">{t.name}</span>
-                </button>
-              ))}
-            </div>
-          </SettingSection>
 
           {/* SKEMA WARNA */}
           <SettingSection
@@ -245,7 +212,7 @@ export default function PengaturanPage() {
 
               <div className="border-t border-zinc-200 dark:border-zinc-800 pt-5">
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-sm font-medium text-zinc-800 dark:text-zinc-200">Kustomisasi Warna Costum</span>
+                  <span className="text-sm font-medium text-primary">Kustomisasi Warna Costum</span>
                   <div
                     className="w-8 h-8 rounded-full shadow-sm border border-zinc-200 dark:border-zinc-700 transition-colors duration-200"
                     style={{ backgroundColor: `hsl(${customH}, ${customS}%, ${customL}%)` }}
@@ -254,7 +221,7 @@ export default function PengaturanPage() {
 
                 <div className="space-y-4">
                   <div className="space-y-1.5">
-                    <div className="flex justify-between text-xs text-zinc-500 font-medium">
+                    <div className="flex justify-between text-xs text-primary font-medium">
                       <span>Hue (Warna)</span>
                       <span>{customH}°</span>
                     </div>
@@ -269,7 +236,7 @@ export default function PengaturanPage() {
                   </div>
 
                   <div className="space-y-1.5">
-                    <div className="flex justify-between text-xs text-zinc-500 font-medium">
+                    <div className="flex justify-between text-xs text-primary font-medium">
                       <span>Saturation (Kepekatan)</span>
                       <span>{customS}%</span>
                     </div>
@@ -284,7 +251,7 @@ export default function PengaturanPage() {
                   </div>
 
                   <div className="space-y-1.5">
-                    <div className="flex justify-between text-xs text-zinc-500 font-medium">
+                    <div className="flex justify-between text-xs text-primary font-medium">
                       <span>Lightness (Keterangan)</span>
                       <span>{customL}%</span>
                     </div>
@@ -318,14 +285,14 @@ export default function PengaturanPage() {
                   className={cn(
                     "flex items-center justify-between p-3 rounded-sm border transition-all",
                     fontFamily === f.value
-                      ? "border-primary bg-primary/5 text-primary shadow-sm"
-                      : "border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900 text-zinc-500"
+                      ? "border-primary bg-primary/20 text-primary shadow-sm font-bold"
+                      : "border-primary/20 hover:bg-[#AC7F5E]/20 hover:text-primary text-primary/70"
                   )}
                   style={{ fontFamily: `var(--font-${f.value})` }}
                 >
                   <div className="flex flex-col items-start">
-                    <span className="text-sm font-medium leading-none mb-1 text-zinc-900 dark:text-zinc-100">{f.name}</span>
-                    <span className="text-[11px] opacity-70">Aa Bb Cc</span>
+                    <span className="text-sm leading-none mb-1 text-primary">{f.name}</span>
+                    <span className="text-[11px] opacity-70 text-primary">Aa Bb Cc</span>
                   </div>
                   {fontFamily === f.value && <Check className="w-4 h-4 shrink-0" />}
                 </button>
@@ -337,7 +304,7 @@ export default function PengaturanPage() {
           <SettingSection
             title="Ukuran Teks"
             desc="Proporsi ukuran teks."
-            icon={Type}
+            icon={BookType}
             isOpen={openSection === "Ukuran Teks"}
             onToggle={() => toggleSection("Ukuran Teks")}
           >
@@ -349,19 +316,42 @@ export default function PengaturanPage() {
                   className={cn(
                     "flex items-center justify-between p-3 rounded-sm border transition-all",
                     fontSize === s.value
-                      ? "border-primary bg-primary/5 text-primary shadow-sm"
-                      : "border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900 text-zinc-500"
+                      ? "border-primary bg-primary/20 text-primary shadow-sm font-bold"
+                      : "border-primary/20 hover:bg-[#AC7F5E]/20 hover:text-primary text-primary/70"
                   )}
                 >
                   <div className="flex flex-col items-start">
-                    <span className="font-medium leading-none mb-1 text-zinc-900 dark:text-zinc-100" style={{
+                    <span className="leading-none mb-1 text-primary" style={{
                       fontSize: s.value === "sm" ? "13px" : s.value === "md" ? "14px" : "15px"
                     }}>{s.name}</span>
-                    <span className="text-[11px] opacity-70">{s.desc}</span>
+                    <span className="text-[11px] opacity-70 text-primary">{s.desc}</span>
                   </div>
                   {fontSize === s.value && <Check className="w-4 h-4 shrink-0" />}
                 </button>
               ))}
+            </div>
+          </SettingSection>
+
+          {/* LAYANAN DUKUNGAN */}
+          <SettingSection
+            title="Dukungan Pelanggan"
+            desc="Konsultasi & pembuatan aplikasi custom."
+            icon={HelpCircle}
+            isOpen={openSection === "Dukungan Pelanggan"}
+            onToggle={() => toggleSection("Dukungan Pelanggan")}
+          >
+            <div className="flex flex-col items-center justify-center text-center p-5 sm:p-8 bg-[#FAEDE4] rounded-sm border border-dashed border-primary/30">
+              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-primary/10 rounded-full flex items-center justify-center mb-3 sm:mb-4">
+                <Monitor className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
+              </div>
+              <h3 className="text-base sm:text-lg font-bold text-primary mb-1.5 sm:mb-2">Pembuatan Aplikasi Custom</h3>
+              <p className="text-xs sm:text-sm text-primary/80 mb-4 sm:mb-6 max-w-2xl px-2 sm:px-0 leading-relaxed">
+                Selain aplikasi ini, Kami melayani pembuatan berbagai macam sistem untuk kebutuhan bisnis Anda, <br></br>di antaranya :<br></br><strong>Website Modern, Aplikasi Perkantoran, Sistem Kasir (POS), ERP, Sistem Antrean, Absensi, Inventory, Stock, Manajemen Aset, Promosi, Toko Online, Booking Sistem, Portal Siswa, Pemerintahan,</strong> <br></br>dan berbagai kebutuhan custom lainnya.
+              </p>
+              <Button onClick={() => window.open('https://wa.me/6283867180887', '_blank')} className="rounded-full px-6 sm:px-8 h-9 sm:h-10 text-xs sm:text-sm shadow-md gap-2">
+                <Phone className="w-4 h-4" />
+                Hubungi Kami via WhatsApp
+              </Button>
             </div>
           </SettingSection>
 
@@ -373,15 +363,15 @@ export default function PengaturanPage() {
             isOpen={openSection === "Tentang Sistem"}
             onToggle={() => toggleSection("Tentang Sistem")}
           >
-            <div className="flex flex-col items-center justify-center p-4 sm:p-6 bg-zinc-50/50 dark:bg-zinc-900/30 rounded-sm border border-zinc-200/60 dark:border-zinc-800/60 shadow-inner">
+            <div className="flex flex-col items-center justify-center p-4 sm:p-6 bg-[#FAEDE4] rounded-sm border border-primary/20 shadow-inner">
               <img src="/icon.svg" alt="HPProfit Logo" className="w-12 h-12 sm:w-16 sm:h-16 mb-2 sm:mb-4 drop-shadow-md" />
-              <h4 className="text-lg sm:text-xl font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">HPProfit Premium</h4>
-              <p className="text-[11px] sm:text-xs text-zinc-500 mb-4 sm:mb-6 font-mono">Versi 1.0.0 (Build 2026)</p>
+              <h4 className="text-lg sm:text-xl font-bold text-primary tracking-tight">HPProfit Premium</h4>
+              <p className="text-[11px] sm:text-xs text-primary/70 mb-4 sm:mb-6 font-mono">Versi 1.0.0 (Build 2026)</p>
 
               <div className="w-full space-y-2.5 sm:space-y-3.5 text-xs sm:text-sm">
                 {/* STATUS LISENSI */}
-                <div className="flex justify-between items-center pb-2.5 sm:pb-3 border-b border-zinc-200 dark:border-zinc-800/60">
-                  <span className="text-zinc-500 dark:text-zinc-400">Status Lisensi</span>
+                <div className="flex justify-between items-center pb-2.5 sm:pb-3 border-b border-primary/20">
+                  <span className="text-primary/80">Status Lisensi</span>
                   {licenseStatus === "authorized" ? (
                     <span className="inline-flex items-center gap-1.5 py-1 text-emerald-600 dark:text-emerald-400 font-semibold text-[10px] sm:text-xs ">
                       <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
@@ -401,8 +391,8 @@ export default function PengaturanPage() {
 
                 {/* SISA WAKTU TRIAL */}
                 {licenseStatus === "trial" && (
-                  <div className="flex justify-between items-center pb-2.5 sm:pb-3 border-b border-zinc-200 dark:border-zinc-800/60">
-                    <span className="text-zinc-500 dark:text-zinc-400">Sisa Waktu Trial</span>
+                  <div className="flex justify-between items-center pb-2.5 sm:pb-3 border-b border-primary/20">
+                    <span className="text-primary/80">Sisa Waktu Trial</span>
                     <span className="font-mono font-bold text-amber-600 dark:text-amber-400 text-xs sm:text-sm">
                       {trialTimeLeft || "Memuat..."}
                     </span>
@@ -423,13 +413,13 @@ export default function PengaturanPage() {
                         Aktivasi Lisensi Permanen
                       </Button>
                     ) : (
-                      <form onSubmit={handleActivateVoucher} className="space-y-2 p-3 bg-zinc-100/80 dark:bg-zinc-800/60 rounded-sm border border-zinc-200 dark:border-zinc-700/60 animate-in fade-in duration-300">
+                      <form onSubmit={handleActivateVoucher} className="space-y-2 p-3 bg-white/20 rounded-sm border border-primary/20 animate-in fade-in duration-300">
                         <div className="flex items-center justify-between">
-                          <span className="text-[11px] font-medium text-zinc-700 dark:text-zinc-300">Masukkan 8 Digit Kode Voucher</span>
+                          <span className="text-[11px] font-medium text-primary">Masukkan 8 Digit Kode Voucher</span>
                           <button
                             type="button"
                             onClick={() => { setShowVoucherInput(false); setVoucherCode(""); }}
-                            className="text-[10px] text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 underline"
+                            className="text-[10px] text-primary/70 hover:text-primary underline"
                           >
                             Batal
                           </button>
@@ -457,17 +447,17 @@ export default function PengaturanPage() {
                     )}
                   </div>
                 )}
-                <div className="flex justify-between items-center pb-2 sm:pb-3 border-b border-zinc-200 dark:border-zinc-800/60">
-                  <span className="text-zinc-500 dark:text-zinc-400">Server Keamanan</span>
-                  <span className="font-semibold text-zinc-700 dark:text-zinc-300 flex items-center gap-1.5">
+                <div className="flex justify-between items-center pb-2 sm:pb-3 border-b border-primary/20">
+                  <span className="text-primary/80">Server Keamanan</span>
+                  <span className="font-semibold text-primary flex items-center gap-1.5">
                     <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                     Firebase Cloud
                   </span>
                 </div>
                 <div className="flex justify-between items-center pb-1">
-                  <span className="text-zinc-500 dark:text-zinc-400">Pengembang</span>
+                  <span className="text-primary/80">Pengembang</span>
                   <div className="flex flex-col items-end">
-                    <span className="font-semibold text-[11px] sm:text-xs text-zinc-700 dark:text-zinc-300 uppercase">ElProject Development</span>
+                    <span className="font-semibold text-[11px] sm:text-xs text-primary uppercase">ElProject Development</span>
                     <a href="https://www.elproject.studio" target="_blank" rel="noopener noreferrer" className="text-[10px] sm:text-[11px] text-emerald-600 dark:text-emerald-500 hover:underline mt-0.5">
                       www.elproject.studio
                     </a>
@@ -476,6 +466,7 @@ export default function PengaturanPage() {
               </div>
             </div>
           </SettingSection>
+
 
         </div>
       </div>

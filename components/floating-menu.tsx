@@ -82,6 +82,8 @@ export function FloatingMenu() {
     }
   };
 
+  if (pathname?.startsWith('/wizard')) return null;
+
   return (
     <div 
       className="fixed bottom-24 left-6 z-50 md:hidden" 
@@ -94,7 +96,7 @@ export function FloatingMenu() {
       {/* Menu Items */}
       <div
         className={cn(
-          "absolute bottom-16 left-0 flex flex-col gap-3 transition-all duration-300 ease-in-out",
+          "absolute bottom-16 left-0 w-full flex flex-col items-center gap-3 transition-all duration-300 ease-in-out",
           isOpen
             ? "opacity-100 translate-y-0 scale-100 pointer-events-auto"
             : "opacity-0 translate-y-4 scale-95 pointer-events-none"
@@ -102,32 +104,32 @@ export function FloatingMenu() {
       >
         <Link
           href="/"
-          className="flex items-center gap-3 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 p-3 rounded-full shadow-lg border border-zinc-200 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-colors group relative"
+          className="flex items-center gap-3 bg-primary text-primary-foreground p-3 rounded-full shadow-lg border border-primary/20 hover:bg-primary/90 transition-colors group relative"
           aria-label="Dashboard"
         >
           <LayoutDashboard size={22} />
-          <span className="text-sm font-medium pl-2 opacity-0 group-hover:opacity-100 absolute left-14 bg-white dark:bg-zinc-800 px-3 py-1.5 rounded-md shadow-sm border border-zinc-200 dark:border-zinc-700 pointer-events-none transition-opacity whitespace-nowrap">
+          <span className="text-sm font-medium pl-2 opacity-0 group-hover:opacity-100 absolute left-14 bg-primary text-primary-foreground px-3 py-1.5 rounded-md shadow-sm border border-primary/20 pointer-events-none transition-opacity whitespace-nowrap">
             Dashboard
           </span>
         </Link>
         <Link
           href="/pengaturan"
-          className="flex items-center gap-3 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 p-3 rounded-full shadow-lg border border-zinc-200 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-colors group relative"
+          className="flex items-center gap-3 bg-primary text-primary-foreground p-3 rounded-full shadow-lg border border-primary/20 hover:bg-primary/90 transition-colors group relative"
           aria-label="Settings"
         >
           <Settings size={22} />
-          <span className="text-sm font-medium pl-2 opacity-0 group-hover:opacity-100 absolute left-14 bg-white dark:bg-zinc-800 px-3 py-1.5 rounded-md shadow-sm border border-zinc-200 dark:border-zinc-700 pointer-events-none transition-opacity whitespace-nowrap">
+          <span className="text-sm font-medium pl-2 opacity-0 group-hover:opacity-100 absolute left-14 bg-primary text-primary-foreground px-3 py-1.5 rounded-md shadow-sm border border-primary/20 pointer-events-none transition-opacity whitespace-nowrap">
             Pengaturan
           </span>
         </Link>
         
         <Link
           href="/bantuan"
-          className="flex items-center gap-3 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 p-3 rounded-full shadow-lg border border-zinc-200 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-colors group relative"
+          className="flex items-center gap-3 bg-primary text-primary-foreground p-3 rounded-full shadow-lg border border-primary/20 hover:bg-primary/90 transition-colors group relative"
           aria-label="Help"
         >
           <HelpCircle size={22} />
-          <span className="text-sm font-medium pl-2 opacity-0 group-hover:opacity-100 absolute left-14 bg-white dark:bg-zinc-800 px-3 py-1.5 rounded-md shadow-sm border border-zinc-200 dark:border-zinc-700 pointer-events-none transition-opacity whitespace-nowrap">
+          <span className="text-sm font-medium pl-2 opacity-0 group-hover:opacity-100 absolute left-14 bg-primary text-primary-foreground px-3 py-1.5 rounded-md shadow-sm border border-primary/20 pointer-events-none transition-opacity whitespace-nowrap">
             Bantuan
           </span>
         </Link>
@@ -140,8 +142,8 @@ export function FloatingMenu() {
         onPointerUp={handlePointerUp}
         onPointerCancel={handlePointerUp}
         className={cn(
-          "flex items-center justify-center w-14 h-14 rounded-full bg-blue-600 text-white shadow-lg shadow-blue-500/30 hover:bg-blue-700 transition-colors duration-300 select-none",
-          isOpen ? "bg-red-500 hover:bg-red-600 shadow-red-500/30" : "",
+          "flex items-center justify-center w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/30 hover:bg-primary/90 transition-colors duration-300 select-none",
+          isOpen ? "bg-red-500 hover:bg-red-600 shadow-red-500/30 text-white" : "",
           isDragging ? "cursor-grabbing scale-105 opacity-90" : "cursor-grab active:scale-95"
         )}
         aria-label="Toggle menu"
