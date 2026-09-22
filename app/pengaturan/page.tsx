@@ -365,8 +365,8 @@ export default function PengaturanPage() {
           >
             <div className="flex flex-col items-center justify-center p-4 sm:p-6 bg-[#FAEDE4] rounded-sm border border-primary/20 shadow-inner">
               <img src="/icon.svg" alt="HPProfit Logo" className="w-12 h-12 sm:w-16 sm:h-16 mb-2 sm:mb-4 drop-shadow-md" />
-              <h4 className="text-lg sm:text-xl font-bold text-primary tracking-tight">HPProfit Premium</h4>
-              <p className="text-[11px] sm:text-xs text-primary/70 mb-4 sm:mb-6 font-mono">Versi 1.0.0 (Build 2026)</p>
+              <h4 className="text-lg sm:text-xl font-bold text-primary tracking-tight">HPPMARGIN</h4>
+              <p className="text-[11px] sm:text-xs text-primary/70 mb-4 sm:mb-6 font-mono">Versi 1.0.3 (Build 2026)</p>
 
               <div className="w-full space-y-2.5 sm:space-y-3.5 text-xs sm:text-sm">
                 {/* STATUS LISENSI */}
@@ -428,10 +428,10 @@ export default function PengaturanPage() {
                           <Input
                             type="text"
                             maxLength={8}
-                            placeholder="Contoh: 12345678"
+                            placeholder="Masukkan Kode Voucher"
                             value={voucherCode}
                             onChange={(e) => setVoucherCode(e.target.value.replace(/[^0-9]/g, ""))}
-                            className="h-9 text-xs tracking-widest text-center font-mono"
+                            className="h-9 text-xs tracking-widest text-center"
                             autoFocus
                           />
                           <Button

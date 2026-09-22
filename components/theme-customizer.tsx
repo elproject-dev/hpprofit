@@ -25,7 +25,7 @@ const ThemeCustomizerContext = createContext<ThemeCustomizerContextType | undefi
 
 export function ThemeCustomizerProvider({ children }: { children: React.ReactNode }) {
   const [colorScheme, setColorScheme] = useState<ColorScheme>("emerald");
-  const [fontFamily, setFontFamily] = useState<FontFamily>("outfit");
+  const [fontFamily, setFontFamily] = useState<FontFamily>("poppins");
   const [fontSize, setFontSize] = useState<FontSize>("md");
   const [customH, setCustomH] = useState(142);
   const [customS, setCustomS] = useState(71);

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export default function WizardPage() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -13,7 +14,14 @@ export default function WizardPage() {
     if (currentStep < totalSteps) {
       setCurrentStep(currentStep + 1);
     } else {
-      // Selesai wizard, arahkan ke beranda
+      // Selesai wizard, set status onboarding & mulai trial
+      localStorage.setItem("hpprofit_has_seen_onboarding", "true");
+      localStorage.setItem("hpprofit_trial_start", Date.now().toString());
+      window.dispatchEvent(new Event("hpprofit_trial_started"));
+      toast.success(`Welcome! Masa Uji Coba Dimulai.`, {
+        description: "Silakan coba seluruh fitur aplikasi secara gratis.",
+        position: "top-center"
+      });
       router.push("/");
     }
   };
@@ -67,7 +75,7 @@ export default function WizardPage() {
         
         {/* Text */}
         <span className="relative z-10 text-white font-[510] text-[17px] tracking-wide" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-          {currentStep === totalSteps ? "Selesai" : "Lanjut"}
+          {currentStep === totalSteps ? "Mulai Uji Coba" : "Lanjut"}
         </span>
       </button>
     </div>

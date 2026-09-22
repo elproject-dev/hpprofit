@@ -24,6 +24,7 @@ export function AppLock({ children }: { children: React.ReactNode }) {
   const [inTrialMode, setInTrialMode] = useState(false);
   const [trialStartMs, setTrialStartMs] = useState<number>(0);
   const [trialExpired, setTrialExpired] = useState(false);
+  const [needsToStartTrial, setNeedsToStartTrial] = useState(false);
 
   // Form State
   const [pin, setPin] = useState("");
@@ -32,7 +33,7 @@ export function AppLock({ children }: { children: React.ReactNode }) {
   const [showThankYou, setShowThankYou] = useState(false);
   const pathname = usePathname();
 
-  useEffect(() => {
+  const checkAccess = () => {
     const authStatus = localStorage.getItem(AUTH_KEY);
     const showThanks = localStorage.getItem("hpprofit_show_thank_you");
 
@@ -40,70 +41,68 @@ export function AppLock({ children }: { children: React.ReactNode }) {
       setShowThankYou(true);
     }
 
-    // 1. Jika sudah punya lisensi permanen
     if (authStatus === "true") {
       setIsAuthorized(true);
+      setInTrialMode(false);
+      setTrialExpired(false);
       setIsMounted(true);
       return;
     }
 
-    // 2. Jika belum punya lisensi, jalankan logika Trial
     let trialStart = localStorage.getItem(TRIAL_START_KEY);
     const now = Date.now();
 
     if (!trialStart) {
-      // User baru pertama kali buka
-      localStorage.setItem(TRIAL_START_KEY, now.toString());
-      trialStart = now.toString();
-
-      // Munculkan notifikasi selamat datang
-      setTimeout(() => {
-        toast.success(`Welcome! Masa Uji Coba ${TRIAL_DAYS} Hari Dimulai.`, {
-          description: "Silakan coba seluruh fitur aplikasi secara gratis.",
-          position: "top-center"
-        });
-      }, 2000);
+      const hasSeen = localStorage.getItem("hpprofit_has_seen_onboarding");
+      if (!hasSeen) {
+        setNeedsToStartTrial(true);
+        setIsMounted(true);
+        return;
+      } else {
+        localStorage.setItem(TRIAL_START_KEY, now.toString());
+        trialStart = now.toString();
+      }
     }
 
-    // Hitung waktu yang berlalu
     const msElapsed = now - parseInt(trialStart);
     const msLeft = Math.max(0, (TRIAL_DAYS * 24 * 60 * 60 * 1000) - msElapsed);
 
     if (msLeft > 0) {
-      // Masih dalam masa trial
+      setNeedsToStartTrial(false);
       setIsAuthorized(true);
       setInTrialMode(true);
       setTrialStartMs(parseInt(trialStart));
       setIsMounted(true);
     } else {
-      // Waktu trial habis
+      setNeedsToStartTrial(false);
       setIsAuthorized(false);
       setTrialExpired(true);
+      setInTrialMode(false);
       setIsMounted(true);
     }
+  };
 
-    const handleLicenseUpdate = () => {
-      if (localStorage.getItem(AUTH_KEY) === "true") {
-        setIsAuthorized(true);
-        setInTrialMode(false);
-        setTrialExpired(false);
-      }
-    };
-
-    window.addEventListener("hpprofit_license_updated", handleLicenseUpdate);
-    window.addEventListener("storage", handleLicenseUpdate);
+  useEffect(() => {
+    checkAccess();
+    
+    window.addEventListener("hpprofit_license_updated", checkAccess);
+    window.addEventListener("storage", checkAccess);
+    window.addEventListener("hpprofit_trial_started", checkAccess);
 
     return () => {
-      window.removeEventListener("hpprofit_license_updated", handleLicenseUpdate);
-      window.removeEventListener("storage", handleLicenseUpdate);
+      window.removeEventListener("hpprofit_license_updated", checkAccess);
+      window.removeEventListener("storage", checkAccess);
+      window.removeEventListener("hpprofit_trial_started", checkAccess);
     };
-  }, []);
+  }, [pathname]);
 
   const handleTrialExpire = () => {
     setIsAuthorized(false);
     setTrialExpired(true);
     setInTrialMode(false);
   };
+
+  // startTrial function removed since popup is removed
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -149,8 +148,8 @@ export function AppLock({ children }: { children: React.ReactNode }) {
 
   if (!isMounted) return null;
 
-  // Bebaskan halaman admin-voucher dari penguncian
-  if (pathname === "/admin-voucher") {
+  // Bebaskan halaman admin-voucher dan wizard dari penguncian
+  if (pathname === "/admin-voucher" || pathname === "/wizard") {
     return <>{children}</>;
   }
 
@@ -159,6 +158,11 @@ export function AppLock({ children }: { children: React.ReactNode }) {
     setShowThankYou(false);
     localStorage.removeItem("hpprofit_show_thank_you");
   };
+
+  // Jika perlu menunggu redirect ke wizard, tampilkan kosong (null) agar tidak berkedip ke layar "Trial Habis"
+  if (needsToStartTrial) {
+    return null;
+  }
 
   // Jika diizinkan masuk (Baik karena berlisensi permanen atau masih trial)
   if (isAuthorized) {
@@ -321,7 +325,7 @@ function TrialCountdown({ trialStartMs, onExpire }: { trialStartMs: number, onEx
           Sisa Masa Trial
         </span>
         <div className="flex items-center gap-2">
-          <span className="text-xl font-mono font-bold tracking-wider">
+          <span className="text-xl font-bold tracking-wider">
             {formatTime(timeLeft)}
           </span>
         </div>

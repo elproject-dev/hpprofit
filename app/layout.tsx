@@ -9,6 +9,8 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { ThemeCustomizerProvider } from "@/components/theme-customizer";
 import { FloatingMenu } from "@/components/floating-menu";
 import { OnboardingWizard } from "@/components/onboarding-wizard";
+import { HardwareBackButton } from "@/components/hardware-back-button";
+import { Toaster } from "@/components/ui/sonner";
 
 const playfairDisplayHeading = Playfair_Display({ subsets: ['latin'], variable: '--font-heading', preload: false });
 const poppins = Poppins({ weight: ['400', '500', '600', '700'], subsets: ['latin'], variable: '--font-poppins', preload: false });
@@ -31,7 +33,7 @@ export const viewport = {
   width: "device-width",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
       lang="id"
@@ -44,10 +46,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <PWAProvider />
             <PWAInstallPrompt />
             <OnboardingWizard />
+            <HardwareBackButton />
             <AppLock>
               {children}
+              <FloatingMenu />
             </AppLock>
-            <FloatingMenu />
+            <Toaster richColors position="bottom-center" />
           </ThemeCustomizerProvider>
         </ThemeProvider>
       </body>
