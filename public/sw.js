@@ -95,8 +95,9 @@ self.addEventListener('fetch', (event) => {
   const request = event.request;
   const url = new URL(request.url);
 
-  // Skip: cross-origin, API, extensions
+  // Skip: cross-origin, API, extensions, and non-GET requests (like HEAD, POST)
   if (
+    request.method !== 'GET' ||
     url.origin !== self.location.origin ||
     url.pathname.startsWith('/api') ||
     request.url.startsWith('chrome-extension')
