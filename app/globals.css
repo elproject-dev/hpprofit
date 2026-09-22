@@ -49,15 +49,15 @@
 }
 
 :root {
-  --card: #C7A58C;
+  --card: #FFFDF9;
   --card-foreground: #56311F;
-  --popover: #C7A58C;
+  --popover: #FFFDF9;
   --popover-foreground: oklch(0.148 0.004 228.8);
   --primary: #56311F;
   --primary-foreground: #FFFFFF;
-  --secondary: #AC7F5E;
+  --secondary: #fcead6;
   --secondary-foreground: #56311F;
-  --muted: #AC7F5E;
+  --muted: #d6bda9;
   --muted-foreground: #56311F;
   --accent: #56311F;
   --accent-foreground: #FFFFFF;
@@ -72,27 +72,27 @@
   --chart-5: oklch(0.47 0.157 37.304);
   --radius: 0.45rem;
   --sidebar: #56311F;
-  --sidebar-foreground: #FFFFFF;
+  --sidebar-foreground: #ffffff;
   --sidebar-primary: #C89D7E;
   --sidebar-primary-foreground: #56311F;
-  --sidebar-accent: #E8CAB4;
+  --sidebar-accent: #fdf4ea;
   --sidebar-accent-foreground: oklch(0.218 0.008 223.9);
   --sidebar-border: oklch(0.925 0.005 214.3);
   --sidebar-ring: oklch(0.723 0.014 214.4);
-  --background: #C7A58C;
+  --background: #FEF8F1;
   --foreground: #56311F;
 }
 
 .dark {
-  --background: #C7A58C;
+  --background: #fcece1;
   --foreground: #56311F;
-  --card: #C7A58C;
+  --card: #fef2ea;
   --card-foreground: #56311F;
   --popover: #C7A58C;
   --popover-foreground: oklch(0.987 0.002 197.1);
   --primary: #56311F;
   --primary-foreground: #FFFFFF;
-  --secondary: #AC7F5E;
+  --secondary: #faece2;
   --secondary-foreground: #56311F;
   --muted: #AC7F5E;
   --muted-foreground: #56311F;
