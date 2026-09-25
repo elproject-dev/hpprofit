@@ -9,8 +9,8 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
     <SidebarProvider
       style={
         {
-          "--sidebar-width": "calc(var(--spacing) * 50)",
-          "--header-height": "calc(var(--spacing) * 9)",
+          "--sidebar-width": "calc(var(--spacing) * 60)",
+          "--header-height": "calc(var(--spacing) * 8)",
         } as React.CSSProperties
       }
     >

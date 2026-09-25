@@ -111,7 +111,7 @@ export function ChartAreaInteractive() {
             />
             <YAxis hide width={0} />
             <ChartTooltip
-              cursor={{ fill: 'var(--muted)', opacity: 0.4 }}
+              cursor={false}
               content={
                 <ChartTooltipContent
                   labelFormatter={(value) => format(new Date(value), "dd MMMM yyyy", { locale: id })}

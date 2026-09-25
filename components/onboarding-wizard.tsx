@@ -18,8 +18,8 @@ export function OnboardingWizard() {
     const isPWA = window.matchMedia('(display-mode: standalone)').matches || (window.navigator as any).standalone === true;
 
     if (!hasSeen && pathname !== "/wizard") {
-      // Lewati wizard jika dibuka via PWA di Android
-      if (isAndroid && isPWA) {
+      // Lewati wizard jika bukan di perangkat Android
+      if (!isAndroid) {
         localStorage.setItem(ONBOARDING_KEY, "true");
         return;
       }

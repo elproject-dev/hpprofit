@@ -24,7 +24,7 @@ function BantuanSection({
   iconComponent?: React.ReactNode
 }) {
   return (
-    <div className="bg-[#F3DBC9] border border-primary/20 rounded-sm shadow-sm transition-all hover:shadow-md overflow-hidden flex flex-col">
+    <div className="bg-[#F5EBE1] dark:bg-zinc-900/50 border border-primary/20 rounded-sm shadow-sm transition-all hover:shadow-md overflow-hidden flex flex-col">
       <button onClick={onToggle} className="w-full flex items-center justify-between p-4 text-left focus:outline-none">
         <div className="flex items-center gap-3">
           <div className="p-2 bg-primary/10 rounded-full text-primary">

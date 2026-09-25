@@ -14,7 +14,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import {
-  LayoutDashboardIcon, CommandIcon, PackageIcon,
+  LayoutDashboardIcon, PackageIcon,
   ReceiptIcon,
   BoxIcon,
   ShoppingBagIcon,

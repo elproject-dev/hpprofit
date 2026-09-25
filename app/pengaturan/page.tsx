@@ -47,7 +47,7 @@ function SettingSection({
 }) {
 
   return (
-    <div className="bg-[#F3DBC9] border border-primary/20 rounded-sm shadow-sm transition-all hover:shadow-md overflow-hidden flex flex-col">
+    <div className="bg-[#F5EBE1] dark:bg-zinc-900/50 border border-primary/20 rounded-sm shadow-sm transition-all hover:shadow-md overflow-hidden flex flex-col">
       <button onClick={onToggle} className="w-full flex items-center justify-between p-4 text-left focus:outline-none">
         <div className="flex items-center gap-3">
           <div className="p-2 bg-primary/10 rounded-full text-primary">
@@ -340,7 +340,7 @@ export default function PengaturanPage() {
             isOpen={openSection === "Dukungan Pelanggan"}
             onToggle={() => toggleSection("Dukungan Pelanggan")}
           >
-            <div className="flex flex-col items-center justify-center text-center p-5 sm:p-8 bg-[#FAEDE4] rounded-sm border border-dashed border-primary/30">
+            <div className="flex flex-col items-center justify-center text-center p-5 sm:p-8 bg-[#F5EBE1] dark:bg-zinc-900/50 rounded-sm border border-dashed border-primary/30">
               <div className="w-12 h-12 sm:w-16 sm:h-16 bg-primary/10 rounded-full flex items-center justify-center mb-3 sm:mb-4">
                 <Monitor className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
               </div>
@@ -363,27 +363,27 @@ export default function PengaturanPage() {
             isOpen={openSection === "Tentang Sistem"}
             onToggle={() => toggleSection("Tentang Sistem")}
           >
-            <div className="flex flex-col items-center justify-center p-4 sm:p-6 bg-[#FAEDE4] rounded-sm border border-primary/20 shadow-inner">
+            <div className="flex flex-col items-center justify-center p-4 sm:p-6 bg-[#F5EBE1] dark:bg-zinc-900/50 rounded-sm border border-primary/20 shadow-inner">
               <img src="/icon.svg" alt="HPProfit Logo" className="w-12 h-12 sm:w-16 sm:h-16 mb-2 sm:mb-4 drop-shadow-md" />
               <h4 className="text-lg sm:text-xl font-bold text-primary tracking-tight">HPPMARGIN</h4>
-              <p className="text-[11px] sm:text-xs text-primary/70 mb-4 sm:mb-6 font-mono">Versi 1.0.3 (Build 2026)</p>
+              <p className="text-[11px] sm:text-xs text-primary/70 mb-4 sm:mb-6">Versi 1.0.3 (Build 2026)</p>
 
               <div className="w-full space-y-2.5 sm:space-y-3.5 text-xs sm:text-sm">
                 {/* STATUS LISENSI */}
                 <div className="flex justify-between items-center pb-2.5 sm:pb-3 border-b border-primary/20">
                   <span className="text-primary/80">Status Lisensi</span>
                   {licenseStatus === "authorized" ? (
-                    <span className="inline-flex items-center gap-1.5 py-1 text-emerald-600 dark:text-emerald-400 font-semibold text-[10px] sm:text-xs ">
-                      <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
+                    <span className="inline-flex items-center gap-1.5 py-1 text-primary/80 dark:text-primary/80 font-semibold text-[10px] sm:text-xs ">
+                      <ShieldCheck className="w-3.5 h-3.5 text-primary" />
                       Teraktivasi Permanen
                     </span>
                   ) : licenseStatus === "trial" ? (
-                    <span className="inline-flex items-center gap-1.5 py-1 text-amber-600 dark:text-amber-400 font-semibold text-[10px] sm:text-xs">
-                      <Clock className="w-3.5 h-3.5 text-amber-500 animate-spin" />
+                    <span className="inline-flex items-center gap-1.5 py-1 text-primary/80 dark:text-primary/80 font-semibold text-[10px] sm:text-xs">
+                      <Clock className="w-3.5 h-3.5 text-primary/80 animate-spin" />
                       Masa Trial - Uji Coba
                     </span>
                   ) : (
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-red-500/10 text-red-600 dark:text-red-400 font-semibold text-[10px] sm:text-xs border border-red-500/20">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/10 text-red-600 dark:text-red-400 font-semibold text-[10px] sm:text-xs border border-primary/20">
                       Trial Kedaluwarsa
                     </span>
                   )}
@@ -393,7 +393,7 @@ export default function PengaturanPage() {
                 {licenseStatus === "trial" && (
                   <div className="flex justify-between items-center pb-2.5 sm:pb-3 border-b border-primary/20">
                     <span className="text-primary/80">Sisa Waktu Trial</span>
-                    <span className="font-mono font-bold text-amber-600 dark:text-amber-400 text-xs sm:text-sm">
+                    <span className="font-bold text-primary/80 dark:text-primary/80 text-xs sm:text-sm">
                       {trialTimeLeft || "Memuat..."}
                     </span>
                   </div>
@@ -407,7 +407,7 @@ export default function PengaturanPage() {
                         type="button"
                         size="sm"
                         onClick={() => setShowVoucherInput(true)}
-                        className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-sm shadow-sm gap-1.5 text-xs h-9"
+                        className="w-full bg-primary/80 hover:bg-emerald-700 text-white font-medium rounded-sm shadow-sm gap-1.5 text-xs h-9"
                       >
                         <KeyRound className="w-3.5 h-3.5" />
                         Aktivasi Lisensi Permanen

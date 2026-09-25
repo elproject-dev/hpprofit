@@ -213,8 +213,7 @@ export function BiayaTambahanInnerForm({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
           <Label htmlFor="nama">Nama Biaya</Label>
-          <Input
-            id="nama"
+          <Input className="placeholder:text-primary/50" id="nama"
             name="nama"
             defaultValue={initialData?.nama}
             required
@@ -225,8 +224,7 @@ export function BiayaTambahanInnerForm({
         <div className="space-y-2">
           <Label htmlFor="kategori">Kategori Biaya</Label>
           <Combobox onValueChange={(val) => val && setKategoriQuery(val as string)}>
-            <ComboboxInput
-              name="kategori"
+            <ComboboxInput className="[&_input::placeholder]:text-primary/50" name="kategori"
               placeholder="Pilih kategori..."
               value={kategoriQuery}
               onChange={(e) => setKategoriQuery(e.target.value)}
@@ -259,8 +257,7 @@ export function BiayaTambahanInnerForm({
         <div className="space-y-2">
           <Label>Tipe Nilai</Label>
           <Combobox onValueChange={(val) => val && handleTipeNilaiChange(val as string)}>
-            <ComboboxInput
-              placeholder="Pilih tipe nilai..."
+            <ComboboxInput className="[&_input::placeholder]:text-primary/50" placeholder="Pilih tipe nilai..."
               value={TIPE_NILAI_OPTIONS.find(o => o.value === tipeNilai)?.label || tipeNilai}
               readOnly
             />
@@ -280,8 +277,7 @@ export function BiayaTambahanInnerForm({
           <Label htmlFor="besaranNilai">
             Besaran Nilai {tipeNilai === "Persentase" ? "(%)" : "(Rp)"}
           </Label>
-          <Input
-            id="besaranNilai"
+          <Input className="placeholder:text-primary/50" id="besaranNilai"
             type="text"
             inputMode="numeric"
             required
@@ -298,8 +294,7 @@ export function BiayaTambahanInnerForm({
           <div className="space-y-2">
             <Label>Terapkan pada Tipe Pembayaran</Label>
             <Combobox onValueChange={(val) => val && setTipePembayaran(val as string)}>
-              <ComboboxInput
-                placeholder="Pilih tipe pembayaran..."
+              <ComboboxInput className="[&_input::placeholder]:text-primary/50" placeholder="Pilih tipe pembayaran..."
                 value={tipePembayaran}
                 readOnly
               />

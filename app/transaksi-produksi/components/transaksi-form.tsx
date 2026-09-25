@@ -238,8 +238,7 @@ export function TransaksiForm({
                   const selected = produkList.find(p => p.id === val)
                   if (selected) setSearchQuery(selected.nama)
                 }}>
-                  <ComboboxInput
-                    className="w-full rounded-none"
+                  <ComboboxInput className="w-full rounded-none [&_input::placeholder]:text-primary/50"
                     placeholder="Cari produk..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
@@ -389,8 +388,7 @@ export function TransaksiForm({
                                   setBiayaTambahan(newArr)
                                 }}
                               >
-                                <ComboboxInput
-                                  className="w-full rounded-none text-sm h-8"
+                                <ComboboxInput className="w-full rounded-none text-sm h-8 [&_input::placeholder]:text-primary/50"
                                   placeholder="Pilih atau ketik biaya..."
                                   value={item.namaBiaya}
                                   onChange={(e) => {
@@ -436,11 +434,10 @@ export function TransaksiForm({
                           </div>
                           <div className="flex rounded-none shadow-sm mt-1 gap-2">
                             <div className="w-24 shrink-0 relative">
-                              <Input
-                                type="text"
+                              <Input type="text"
                                 inputMode="numeric"
                                 placeholder="100"
-                                className="rounded-none h-8 text-sm w-full pr-6 text-center"
+                                className="rounded-none h-8 text-sm w-full pr-6 text-center placeholder:text-primary/50"
                                 value={item.persenPenggunaan ?? ""}
                                 onChange={(e) => {
                                   const val = e.target.value.replace(/[^0-9.]/g, "")
@@ -462,11 +459,10 @@ export function TransaksiForm({
                               <div className="inline-flex items-center justify-center px-3 rounded-none border border-r-0 border-input bg-muted/50 text-xs font-medium text-muted-foreground">
                                 Rp
                               </div>
-                              <Input
-                                type="text"
+                              <Input type="text"
                                 inputMode="numeric"
                                 placeholder="0"
-                                className="rounded-l-none h-8 text-sm w-full"
+                                className="rounded-l-none h-8 text-sm w-full placeholder:text-primary/50"
                                 value={item.nominal ? new Intl.NumberFormat("id-ID").format(Number(item.nominal)) : ""}
                                 onChange={(e) => {
                                   const newArr = [...biayaTambahan]
@@ -521,8 +517,7 @@ export function TransaksiForm({
                                     setBiayaTambahan(newArr)
                                   }}
                                 >
-                                  <ComboboxInput
-                                    className="w-full rounded-none"
+                                  <ComboboxInput className="w-full rounded-none [&_input::placeholder]:text-primary/50"
                                     placeholder="Pilih atau ketik biaya..."
                                     value={item.namaBiaya}
                                     onChange={(e) => {
@@ -557,10 +552,9 @@ export function TransaksiForm({
                                 </Combobox>
                               </TableCell>
                               <TableCell className="p-2">
-                                <Input
-                                  type="text"
+                                <Input type="text"
                                   placeholder="100"
-                                  className="rounded-none w-full text-center"
+                                  className="rounded-none w-full text-center placeholder:text-primary/50"
                                   value={item.persenPenggunaan ?? ""}
                                   onChange={(e) => {
                                     const val = e.target.value.replace(/[^0-9.]/g, "")
@@ -577,10 +571,9 @@ export function TransaksiForm({
                                 />
                               </TableCell>
                               <TableCell className="p-2">
-                                <Input
-                                  type="text"
+                                <Input type="text"
                                   placeholder="0"
-                                  className="rounded-none w-full"
+                                  className="rounded-none w-full placeholder:text-primary/50"
                                   value={item.nominal ? new Intl.NumberFormat("id-ID").format(Number(item.nominal)) : ""}
                                   onChange={(e) => {
                                     const newArr = [...biayaTambahan]

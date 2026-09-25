@@ -308,14 +308,13 @@ export function ProdukInnerForm({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
             <Label htmlFor="nama">Nama Produk</Label>
-            <Input id="nama" name="nama" defaultValue={initialData?.nama} required placeholder="Contoh: Es Kopi Susu Aren" />
+            <Input className="placeholder:text-primary/50" id="nama" name="nama" defaultValue={initialData?.nama} required placeholder="Contoh: Es Kopi Susu Aren" />
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="kategori">Kategori</Label>
             <Combobox onValueChange={(val) => val && setKategoriQuery(val as string)}>
-              <ComboboxInput
-                name="kategori"
+              <ComboboxInput className="[&_input::placeholder]:text-primary/50" name="kategori"
                 placeholder="Pilih atau ketik kategori..."
                 value={kategoriQuery}
                 onChange={(e) => setKategoriQuery(e.target.value)}
@@ -343,8 +342,7 @@ export function ProdukInnerForm({
 
           <div className="space-y-2">
             <Label htmlFor="hargaJual">Target Harga Jual</Label>
-            <Input
-              id="hargaJual"
+            <Input className="placeholder:text-primary/50" id="hargaJual"
               name="hargaJual"
               type="text"
               inputMode="numeric"
@@ -397,8 +395,7 @@ export function ProdukInnerForm({
                           if (selected) newArr[index].searchQuery = selected.nama
                           setKomposisiBahan(newArr)
                         }}>
-                          <ComboboxInput
-                            className="w-full h-8 text-xs"
+                          <ComboboxInput className="w-full h-8 text-xs [&_input::placeholder]:text-primary/50"
                             placeholder="Cari bahan..."
                             value={item.searchQuery}
                             onChange={(e) => {
@@ -505,8 +502,7 @@ export function ProdukInnerForm({
                             if (selected) newArr[index].searchQuery = selected.nama
                             setKomposisiBahan(newArr)
                           }}>
-                            <ComboboxInput
-                              className="w-full rounded-none"
+                            <ComboboxInput className="w-full rounded-none [&_input::placeholder]:text-primary/50"
                               placeholder="Cari bahan..."
                               value={item.searchQuery}
                               onChange={(e) => {
@@ -652,8 +648,7 @@ export function ProdukInnerForm({
                           if (selected) newArr[index].searchQuery = selected.nama
                           setKomposisiPackage(newArr)
                         }}>
-                          <ComboboxInput
-                            className="w-full h-8 text-xs"
+                          <ComboboxInput className="w-full h-8 text-xs [&_input::placeholder]:text-primary/50"
                             placeholder="Cari kemasan..."
                             value={item.searchQuery}
                             onChange={(e) => {
@@ -760,8 +755,7 @@ export function ProdukInnerForm({
                             if (selected) newArr[index].searchQuery = selected.nama
                             setKomposisiPackage(newArr)
                           }}>
-                            <ComboboxInput
-                              className="w-full rounded-none"
+                            <ComboboxInput className="w-full rounded-none [&_input::placeholder]:text-primary/50"
                               placeholder="Cari kemasan..."
                               value={item.searchQuery}
                               onChange={(e) => {

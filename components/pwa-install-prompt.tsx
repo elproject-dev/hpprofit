@@ -67,7 +67,7 @@ export function PWAInstallPrompt() {
 
   return (
     <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-sm animate-in slide-in-from-top-8 fade-in duration-500 ease-out">
-      <div className="bg-white/70 dark:bg-zinc-950/70 backdrop-blur-xl border border-zinc-200/50 dark:border-zinc-800/50 rounded-[1.25rem] shadow-2xl p-4 flex flex-col gap-3 relative overflow-hidden">
+      <div className="bg-white/70 dark:bg-zinc-950/70 backdrop-blur-xl border border-zinc-200/50 dark:border-zinc-800/50 rounded-none shadow-2xl p-4 flex flex-col gap-3 relative overflow-hidden">
 
         {/* Dekorasi Glow */}
         <div className="absolute -bottom-10 -right-10 w-24 h-24 bg-emerald-500/20 rounded-full blur-2xl pointer-events-none" />
@@ -80,12 +80,12 @@ export function PWAInstallPrompt() {
         </button>
 
         <div className="flex items-start gap-4">
-          <div className="w-12 h-12 rounded-sm flex items-center justify-center shrink-0 bg-transparent">
+          <div className="w-12 h-12 rounded-none flex items-center justify-center shrink-0 bg-transparent">
             <img src="/icon.svg" alt="HPProfit" className="w-10 h-10 object-contain drop-shadow-sm" />
           </div>
-          <div className="pr-4">
-            <h3 className="font-semibold text-zinc-900 dark:text-zinc-100 text-[15px] tracking-tight">Install HPProfit</h3>
-            <p className="text-[13px] text-zinc-500 dark:text-zinc-400 mt-1 leading-relaxed">
+          <div className="pr-4 rounded-none">
+            <h3 className="font-semibold text-zinc-900 dark:text-zinc-100 text-[15px] tracking-tight">Install HPP MARGIN</h3>
+            <p className="text-[10px] text-zinc-500 dark:text-zinc-400 mt-1 leading-relaxed">
               Pasang aplikasi ini ke layar utama Anda <br></br>Nikmati akses lebih cepat & fitur offline penuh.
             </p>
           </div>

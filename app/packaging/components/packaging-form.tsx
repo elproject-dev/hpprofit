@@ -252,7 +252,7 @@ export function PackagingInnerForm({
           <div className="flex items-center min-h-[20px]">
             <Label htmlFor="nama">Nama Packaging</Label>
           </div>
-          <Input id="nama" name="nama" defaultValue={initialData?.nama} placeholder="Masukkan nama packaging" required />
+          <Input className="placeholder:text-primary/50" id="nama" name="nama" defaultValue={initialData?.nama} placeholder="Masukkan nama packaging" required />
         </div>
 
         <div className="space-y-2">
@@ -260,8 +260,7 @@ export function PackagingInnerForm({
             <Label htmlFor="kategori">Kategori</Label>
           </div>
           <Combobox onValueChange={(val) => val && setKategoriQuery(val as string)}>
-            <ComboboxInput
-              name="kategori"
+            <ComboboxInput className="[&_input::placeholder]:text-primary/50" name="kategori"
               placeholder="Pilih atau ketik kategori..."
               value={kategoriQuery}
               onChange={(e) => setKategoriQuery(e.target.value)}
@@ -291,8 +290,7 @@ export function PackagingInnerForm({
             <Label htmlFor="satuanDasar">Nama Satuan <span className="text-muted-foreground font-normal">(opsional)</span></Label>
           </div>
           <Combobox onValueChange={(val) => val && setSatuanDasar(val as string)}>
-            <ComboboxInput
-              name="satuanDasar"
+            <ComboboxInput className="[&_input::placeholder]:text-primary/50" name="satuanDasar"
               placeholder="Contoh: bungkus, box, lusin, ikat"
               value={satuanDasar}
               onChange={(e) => setSatuanDasar(e.target.value)}
@@ -322,8 +320,7 @@ export function PackagingInnerForm({
           <div className="flex items-center min-h-[20px]">
             <Label htmlFor="konversi">Jumlah Satuan - isi</Label>
           </div>
-          <Input
-            type="text"
+          <Input className="placeholder:text-primary/50" type="text"
             inputMode="numeric"
             name="konversi"
             id="konversi"
@@ -339,8 +336,7 @@ export function PackagingInnerForm({
             <Label htmlFor="satuan">Jenis Satuan</Label>
           </div>
           <Combobox onValueChange={(val) => val && setSatuanQuery(val as string)}>
-            <ComboboxInput
-              name="satuan"
+            <ComboboxInput className="[&_input::placeholder]:text-primary/50" name="satuan"
               placeholder="Pilih atau ketik satuan..."
               value={satuanQuery}
               onChange={(e) => setSatuanQuery(e.target.value)}
@@ -370,8 +366,7 @@ export function PackagingInnerForm({
           <div className="flex items-center min-h-[20px]">
             <Label htmlFor="hargaTotal">Harga Total Pembelian</Label>
           </div>
-          <Input
-            id="hargaTotal"
+          <Input className="placeholder:text-primary/50" id="hargaTotal"
             name="hargaTotal"
             type="text"
             inputMode="numeric"
@@ -389,8 +384,7 @@ export function PackagingInnerForm({
               </span>
             )}
           </div>
-          <Input
-            id="harga"
+          <Input id="harga"
             name="harga"
             type="text"
             inputMode="numeric"
@@ -400,7 +394,7 @@ export function PackagingInnerForm({
             disabled={!!hargaTotal}
             onChange={handleHargaChange}
             placeholder="0"
-            className={hargaTotal ? "bg-muted cursor-not-allowed" : ""}
+            className={`placeholder:text-primary/50 ${hargaTotal ? "bg-muted cursor-not-allowed" : ""}`}
           />
         </div>
       </div>

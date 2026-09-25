@@ -18,18 +18,18 @@ const nunito = Nunito({ weight: ['400', '500', '600', '700'], subsets: ['latin']
 const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit', preload: false });
 
 export const metadata: Metadata = {
-  title: "HPProfit App",
+  title: "HPP MARGIN PRO",
   description: "HPP MARGIN GENERATOR",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "HPProfit",
+    title: "HPP MARGIN PRO",
   },
 };
 
 export const viewport = {
-  themeColor: "#56311F",
+  themeColor: "#7e4b31ff",
   width: "device-width",
 };
 

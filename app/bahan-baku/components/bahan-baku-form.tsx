@@ -14,8 +14,6 @@ import {
   ComboboxEmpty,
 } from "@/components/ui/combobox"
 import { toast } from "@/components/ui/toast"
-import { HelpCircle, AlertTriangleIcon } from "lucide-react"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
 const DEFAULT_KATEGORI_OPTIONS = ["Sembako", "Daging", "Sayuran", "Buah", "Bumbu", "Packaging", "Lainnya"]
 const DEFAULT_SATUAN_OPTIONS = [
@@ -253,7 +251,7 @@ export function BahanBakuInnerForm({
           <div className="flex items-center min-h-[20px]">
             <Label htmlFor="nama">Nama Bahan Baku</Label>
           </div>
-          <Input id="nama" name="nama" defaultValue={initialData?.nama} placeholder="Masukkan nama bahan" required />
+          <Input id="nama" name="nama" defaultValue={initialData?.nama} placeholder="Masukkan nama bahan" className="placeholder:text-primary/50" required />
         </div>
 
         <div className="space-y-2">
@@ -266,6 +264,7 @@ export function BahanBakuInnerForm({
               placeholder="Pilih atau ketik kategori..."
               value={kategoriQuery}
               onChange={(e) => setKategoriQuery(e.target.value)}
+              className="[&_input::placeholder]:text-primary/50"
             />
             <ComboboxContent>
               <ComboboxList>
@@ -298,6 +297,7 @@ export function BahanBakuInnerForm({
               placeholder="Masukkan Nama Satuan"
               value={satuanDasar}
               onChange={(e) => setSatuanDasar(e.target.value)}
+              className="[&_input::placeholder]:text-primary/50"
             />
             <ComboboxContent>
               <ComboboxList>
@@ -333,6 +333,7 @@ export function BahanBakuInnerForm({
             onChange={handleKonversiChange}
             required
             placeholder="Contoh: 1"
+            className="placeholder:text-primary/50"
           />
         </div>
 
@@ -348,6 +349,7 @@ export function BahanBakuInnerForm({
               placeholder="Pilih atau ketik satuan..."
               value={satuanQuery}
               onChange={(e) => setSatuanQuery(e.target.value)}
+              className="[&_input::placeholder]:text-primary/50"
             />
             <ComboboxContent>
               <ComboboxList>
@@ -382,6 +384,7 @@ export function BahanBakuInnerForm({
             value={hargaTotal}
             onChange={handleHargaTotalChange}
             placeholder="Masukkan total harga pembelian"
+            className="placeholder:text-primary/50"
           />
         </div>
 
@@ -405,7 +408,7 @@ export function BahanBakuInnerForm({
             disabled={!!hargaTotal}
             onChange={handleHargaChange}
             placeholder="0"
-            className={hargaTotal ? "bg-muted cursor-not-allowed" : ""}
+            className={`placeholder:text-primary/50 ${hargaTotal ? "bg-muted cursor-not-allowed" : ""}`}
           />
         </div>
       </div>
