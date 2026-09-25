@@ -1,7 +1,7 @@
 {
   "id": "/",
-  "name": "HPProfit App",
-  "short_name": "HPProfit",
+  "name": "HPPMARGIN",
+  "short_name": "HPPMARGIN",
   "description": "Aplikasi Manajemen HPP & Margin",
   "start_url": "/",
   "display": "standalone",
