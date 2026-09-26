@@ -2,14 +2,15 @@
 
 import { useTheme } from "next-themes";
 import { useThemeCustomizer } from "@/components/theme-customizer";
-import { Check, Monitor, Moon, Sun, Palette, Type, ChevronDown, Info, Clock, KeyRound, ShieldCheck, Phone, HelpCircle, AArrowUp, BookType } from "lucide-react";
+import { Check, Monitor, Moon, Sun, Palette, Type, ChevronDown, Info, Clock, KeyRound, ShieldCheck, Phone, HelpCircle, AArrowUp, BookType, Database, Download, Upload } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { AppLayout } from "@/components/app-layout";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { toast } from "sonner";
 import { validateFirebaseVoucher } from "@/lib/voucher";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { db } from "@/lib/db";
 
 const colors = [
   { name: "Chocolate (Default)", value: "emerald", class: "bg-[#56311F] border-[#3b2215]" },
@@ -86,6 +87,11 @@ export default function PengaturanPage() {
   // State untuk menyimpan menu mana yang sedang terbuka
   const [openSection, setOpenSection] = useState<string>("");
 
+  // State Backup & Restore
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isBackuping, setIsBackuping] = useState(false);
+  const [isRestoring, setIsRestoring] = useState(false);
+
   const toggleSection = (title: string) => {
     setOpenSection((prev) => (prev === title ? "" : title));
   };
@@ -128,6 +134,81 @@ export default function PengaturanPage() {
     const interval = setInterval(checkLicense, 1000);
     return () => clearInterval(interval);
   }, []);
+
+  const handleBackup = async () => {
+    try {
+      setIsBackuping(true);
+      const data: Record<string, any[]> = {};
+      for (const table of db.tables) {
+        data[table.name] = await table.toArray();
+      }
+      const jsonString = JSON.stringify(data);
+      const blob = new Blob([jsonString], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `backup-hppmargin-${new Date().toISOString().split('T')[0]}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      toast.success("Backup Berhasil", {
+        description: "Data berhasil disimpan ke file JSON."
+      });
+    } catch (error) {
+      toast.error("Backup Gagal", {
+        description: "Terjadi kesalahan saat mem-backup data."
+      });
+      console.error(error);
+    } finally {
+      setIsBackuping(false);
+    }
+  };
+
+  const handleRestoreClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    try {
+      setIsRestoring(true);
+      const text = await file.text();
+      const data = JSON.parse(text);
+
+      await db.transaction("rw", db.tables, async () => {
+        for (const table of db.tables) {
+          if (data[table.name]) {
+            await table.clear();
+            await table.bulkAdd(data[table.name]);
+          }
+        }
+      });
+
+      toast.success("Restore Berhasil", {
+        description: "Data berhasil dikembalikan dari file backup."
+      });
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+
+    } catch (error) {
+      toast.error("Restore Gagal", {
+        description: "File backup tidak valid atau terjadi kesalahan."
+      });
+      console.error(error);
+    } finally {
+      setIsRestoring(false);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+    }
+  };
 
   const handleActivateVoucher = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -329,6 +410,50 @@ export default function PengaturanPage() {
                   {fontSize === s.value && <Check className="w-4 h-4 shrink-0" />}
                 </button>
               ))}
+            </div>
+          </SettingSection>
+
+          {/* BACKUP & RESTORE */}
+          <SettingSection
+            title="Backup & Restore Data"
+            desc="Simpan dan pulihkan data aplikasi ke format JSON."
+            icon={Database}
+            isOpen={openSection === "Backup & Restore Data"}
+            onToggle={() => toggleSection("Backup & Restore Data")}
+          >
+            <div className="flex flex-col gap-4 p-4 bg-white dark:bg-zinc-800 rounded-sm border border-primary/20">
+              <div className="flex flex-col gap-2">
+                <h4 className="text-sm font-semibold text-primary">Backup Data</h4>
+                <p className="text-xs text-primary/70">Unduh seluruh data aplikasi ke dalam format JSON.</p>
+                <Button
+                  onClick={handleBackup}
+                  disabled={isBackuping}
+                  className="w-full sm:w-auto self-start gap-2 h-9 text-xs"
+                >
+                  <Download className="w-4 h-4" />
+                  {isBackuping ? "Memproses..." : "Backup Data"}
+                </Button>
+              </div>
+              <div className="border-t border-primary/10 pt-4 flex flex-col gap-2">
+                <h4 className="text-sm font-semibold text-primary">Restore Data</h4>
+                <div className="text-xs text-primary/70">Pulihkan data aplikasi dari file backup</div>
+                <input
+                  type="file"
+                  accept=".json"
+                  ref={fileInputRef}
+                  className="hidden"
+                  onChange={handleFileChange}
+                />
+                <Button
+                  onClick={handleRestoreClick}
+                  disabled={isRestoring}
+                  variant="outline"
+                  className="w-full sm:w-auto self-start gap-2 h-9 text-xs border-primary text-primary hover:bg-primary/10"
+                >
+                  <Upload className="w-4 h-4" />
+                  {isRestoring ? "Memproses..." : "Restore Data"}
+                </Button>
+              </div>
             </div>
           </SettingSection>
 
